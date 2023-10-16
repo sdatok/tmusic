@@ -15,4 +15,4 @@ import './bootstrap';
 import './components/Example';
 
 import { Example } from './Example.jsx';
-< Example/>
+//< Example/>

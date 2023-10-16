@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\YourController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -20,6 +20,8 @@ Route::get('/', function () {
 Route::get('/about', function () {
     return view('about');
 });
+
+Route::get('/your-route', [YourController::class, 'yourMethod']);
 
 Auth::routes();
 
