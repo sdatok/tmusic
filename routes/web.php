@@ -49,6 +49,9 @@ Route::get('/auth/google/callback', function () {
         ]);
     }
 
+    $user->last_login_at = now();
+    $user->update();
+
     Auth::login($user);
     return redirect()->route('dashboard');
 });
