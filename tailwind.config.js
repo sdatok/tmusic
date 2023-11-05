@@ -20,3 +20,31 @@ export default {
 
     plugins: [forms],
 };
+// module.exports = {
+//     content: ["./src/**/*.{js,jsx,ts,tsx}"],
+//     theme: {
+//         extend: {
+//             colors: {
+//                 white: "#fff",
+//                 gainsboro: "#dfdcdc",
+//                 black: "#000",
+//                 darkslategray: "#353434",
+//                 silver: "#c2bfbf",
+//             },
+//             spacing: {},
+//             fontFamily: {
+//                 "nunito-sans": "'Nunito Sans'",
+//                 inter: "Inter",
+//             },
+//         },
+//         fontSize: {
+//             base: "16px",
+//             xs: "12px",
+//             xl: "20px",
+//             inherit: "inherit",
+//         },
+//     },
+//     corePlugins: {
+//         preflight: false,
+//     },
+// };

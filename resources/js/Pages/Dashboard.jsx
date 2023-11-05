@@ -1,5 +1,8 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
+import { useEffect } from "react";
+
+// import Foryou from "./Foryou.jsx";
 
 export default function Dashboard({ auth }) {
     return (
@@ -16,6 +19,9 @@ export default function Dashboard({ auth }) {
                     </div>
                 </div>
             </div>
+            {/*<div className="w-5 h5">*/}
+            {/*<Foryou/>*/}
+            {/*</div>*/}
         </AuthenticatedLayout>
     );
 }

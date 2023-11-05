@@ -2,8 +2,12 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use Laravel\Socialite\Facades\Socialite;
+use App\Http\Controllers\Auth\ProviderController;
+use App\Models\User;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,6 +28,31 @@ Route::get('/', function () {
         'phpVersion' => PHP_VERSION,
     ]);
 });
+
+
+Route::get('/auth/google/redirect', function () {
+    return Socialite::driver('google')->redirect();
+})->name('google.redirect');
+
+Route::get('/auth/google/callback', function () {
+    $googleUser = Socialite::driver('google')->user(); // use $googleUser instead of $user
+
+    $user = User::where('google_id', $googleUser->id)->first();
+
+    if (!$user) {
+       $user = User::create([
+            'google_id' => $googleUser->id,
+            'name' => $googleUser->name,
+            'username' => User::generateUserName($googleUser->nickname),
+            'email' => $googleUser->email,
+            'google_token' => $googleUser->token,
+        ]);
+    }
+
+    Auth::login($user);
+    return redirect()->route('dashboard');
+});
+
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
