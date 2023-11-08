@@ -10,9 +10,7 @@ export default function Dashboard({auth}) {
     const [searchInput, setSearchInput] = useState("");
     const [accessToken, setAccessToken] = useState("");
     const [tracks, setTracks] = useState([]);
-    const [savedSongs, setSavedSongs] = useState([]);
-    const [showPostCard, setShowPostCard] = useState(false);
-    const [selectedSong, setSelectedSong] = useState(null);
+    const [selectedPost, setSelectedPost] = useState(null);
 
     useEffect(() => {
         //API ACCESS TOKEN
@@ -40,7 +38,7 @@ export default function Dashboard({auth}) {
 
                 const response = await fetch('https://api.spotify.com/v1/search?q=' + searchInput + '&type=track', searchParameters);
                 const data = await response.json();
-                console.log(data.tracks.items);
+                // console.log(data.tracks.items);
                 setTracks(data.tracks.items);
             } catch (error) {
                 console.error('Error fetching data', error);
@@ -97,16 +95,23 @@ export default function Dashboard({auth}) {
 
     //When a song is selected
     const handleSongClick = (track) => {
-        console.log('selectedSong variable:', track); // Add this line to log the selected song
-        setSelectedSong(track);
-        setShowPostCard(true);
+        console.log('selectedSong variable:', track);
+        setSelectedPost({
+            title: track.name,
+            album: track.album.name,
+            artist: track.artists[0].name,
+            albumCover: track.album.images[0].url,
+            description: "",
+            timePosted: new Date().toString(),
+            userPosted: auth.user.name
+        });
+        // setTracks([track]);
     };
-
-    const handlePostSave = (post) => {
-        console.log("Saving post:", post);
-        // Perform post save operation here
-        setShowPostCard(false);
-    };
+    // const handlePostSave = (post) => {
+    //     console.log("Saving post:", post);
+    //     // Perform post save operation here
+    //     setShowPostCard(false);
+    // };
 
     return (
         <AuthenticatedLayout
@@ -115,11 +120,11 @@ export default function Dashboard({auth}) {
         >
             <Head title="Dashboard"/>
 
-            <div className="container mx-auto px-4 py-12">
-                <div className="mb-3 flex items-center">
+            <div className="container mx-auto px-4 py-8">
+                <div className="flex items-center">
                     <input
                         className="border-2 border-gray-300 w-1/2 p-2 mr-2"
-                        placeholder="Search For Artist"
+                        placeholder="Search For Song"
                         type="text"
                         onKeyPress={event => {
                             if (event.key === 'Enter') {
@@ -138,10 +143,34 @@ export default function Dashboard({auth}) {
                     </button>
                 </div>
             </div>
+            {selectedPost && (
+                <div className="container mx-auto px-4 mb-8">
+                    <div className="max-w-3xl mx-auto bg-white rounded-lg overflow-hidden shadow-lg flex p-4 mb-4">
+                        <div className="w-2/3 p-2">
+                            <div className="text-xl font-bold mb-2">{selectedPost.title}</div>
+                            <div className="text-lg mb-2">{selectedPost.artist}</div>
+                            <textarea
+                                className="border-2 border-gray-300 w-full p-2 mb-2"
+                                placeholder="Type your description here"
+                                value={selectedPost.description}
+                                onChange={event => setSelectedPost({ ...selectedPost, description: event.target.value })}
+                            />
+                            <button
+                                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                                onClick={() => {
+                                    // Send the selectedPost data to your backend here
+                                }}
+                            >
+                                Submit
+                            </button>
+                        </div>
+                        <img className="w-1/3" src={selectedPost.albumCover} alt={selectedPost.title} />
+                    </div>
+                </div>
+            )}
             <div className="container mx-auto px-4">
                 <div className="grid grid-cols-4 gap-4 mx-2">
                     {tracks && tracks.map((track, i) => {
-                        console.log('track variable: ',track); // Add this line to log the track object
                         return (
                             <div
                                 className="max-w-xs rounded-xl overflow-hidden shadow-lg cursor-pointer"
@@ -157,9 +186,9 @@ export default function Dashboard({auth}) {
                     })}
                 </div>
             </div>
-            {showPostCard && selectedSong && (
-                <PostCard song={selectedSong} onSave={handlePostSave} />
-            )}
+            {/*{showPostCard && selectedSong && (*/}
+            {/*    <PostCard song={selectedSong} onSave={handlePostSave} />*/}
+            {/*)}*/}
 
         </AuthenticatedLayout>
     );
