@@ -1,7 +1,8 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import {Head} from '@inertiajs/react';
 import {useEffect, useState} from "react";
-import PostCard from "@/Pages/PostCard.jsx";
+import SpotifyAuthPopup from '@/Pages/SpotifyAuthPopup.jsx';
+
 
 const CLIENT_ID = "f447bf4cf4ea4195a01796a7e26dcba7";
 const CLIENT_SECRET = "71ec81c0596242b88cf4d1c463903631";
@@ -11,8 +12,16 @@ export default function Dashboard({auth}) {
     const [accessToken, setAccessToken] = useState("");
     const [tracks, setTracks] = useState([]);
     const [selectedPost, setSelectedPost] = useState(null);
+    const [showSpotifyPopup, setShowSpotifyPopup] = useState(false);
 
     useEffect(() => {
+        // Check if there's a Spotify token in local storage
+        const spotifyToken = localStorage.getItem('spotify_token');
+
+        // If no Spotify token is found, show the Spotify authorization pop-up
+        if (!spotifyToken) {
+            setShowSpotifyPopup(true);
+        }
         //API ACCESS TOKEN
         var authParameters = {
             method: 'POST',
@@ -51,48 +60,6 @@ export default function Dashboard({auth}) {
             }
         }, [searchInput, accessToken]);
 
-    //Search
-    // async function search() {
-    //     console.log("Search for " + searchInput); //ie. Kanye West
-    //
-    //     //Get request using search to get Song title
-    //     var searchParameters = {
-    //         method: 'GET',
-    //         headers: {
-    //             'Content-type': 'application/json',
-    //             'Authorization': 'Bearer ' + accessToken
-    //         }
-    //     }
-    //     var songItems = await fetch('https://api.spotify.com/v1/search?q=' + searchInput + '&type=track', searchParameters)
-    //         .then(response => response.json())
-    //         .then(data => {
-    //             console.log(data.tracks.items);
-    //             setSongs(data.tracks.items);
-    //         })
-    //
-    //     console.log("Song Items is " + songItems);
-        //Get request with Artist ID grab all albums from that artist
-        // var returnedAlbums = await fetch('https://api.spotify.com/v1/tracks/' + songItems + '/tracks' + '?include_groups=album&market=US&limit=50', searchParameters)
-        //     .then(response => response.json())
-        //     .then(data => {
-        //         console.log(data);
-        //         setSongs(data.items);
-        //     });
-
-        // var artistID = await fetch('https://api.spotify.com/v1/search?q=' + searchInput + '&type=artist', searchParameters)
-        //     .then(response => response.json())
-        //     .then(data => {return data.artists.items[0].id})
-        //
-        // console.log("Artist ID is " + artistID);
-        // //Get request with Artist ID grab all albums from that artist
-        // var returnedAlbums = await fetch('https://api.spotify.com/v1/artists/' + artistID + '/albums' + '?include_groups=album&market=US&limit=50', searchParameters)
-        //     .then(response => response.json())
-        //     .then(data => {
-        //         console.log(data);
-        //         setAlbums(data.items);
-        //     });
-        //Display those albums
-
     //When a song is selected
     const handleSongClick = (track) => {
         console.log('selectedSong variable:', track);
@@ -105,13 +72,7 @@ export default function Dashboard({auth}) {
             timePosted: new Date().toString(),
             userPosted: auth.user.name
         });
-        // setTracks([track]);
     };
-    // const handlePostSave = (post) => {
-    //     console.log("Saving post:", post);
-    //     // Perform post save operation here
-    //     setShowPostCard(false);
-    // };
 
     return (
         <AuthenticatedLayout
@@ -147,10 +108,10 @@ export default function Dashboard({auth}) {
                 <div className="container mx-auto px-4 mb-8">
                     <div className="max-w-3xl mx-auto bg-white rounded-lg overflow-hidden shadow-lg flex p-4 mb-4">
                         <div className="w-2/3 p-2">
-                            <div className="text-xl font-bold mb-2">{selectedPost.title}</div>
-                            <div className="text-lg mb-2">{selectedPost.artist}</div>
+                            <div className="text-lg font-bold">{selectedPost.title}</div>
+                            <div className="text-md mb-2 text-gray-500">{selectedPost.artist}</div>
                             <textarea
-                                className="border-2 border-gray-300 w-full p-2 mb-2"
+                                className="text-sm border-2 border-gray-300 w-full p-2 mb-2"
                                 placeholder="Type your description here"
                                 value={selectedPost.description}
                                 onChange={event => setSelectedPost({ ...selectedPost, description: event.target.value })}
@@ -185,10 +146,9 @@ export default function Dashboard({auth}) {
                         );
                     })}
                 </div>
+                {/* Conditionally render the SpotifyAuthPopup */}
+                {showSpotifyPopup && <SpotifyAuthPopup onClose={() => setShowSpotifyPopup(false)} />}
             </div>
-            {/*{showPostCard && selectedSong && (*/}
-            {/*    <PostCard song={selectedSong} onSave={handlePostSave} />*/}
-            {/*)}*/}
 
         </AuthenticatedLayout>
     );
