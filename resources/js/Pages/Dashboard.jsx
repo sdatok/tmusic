@@ -5,7 +5,9 @@ import SpotifyAuthPopup from '@/Pages/SpotifyAuthPopup.jsx';
 
 
 const CLIENT_ID = "f447bf4cf4ea4195a01796a7e26dcba7";
-const CLIENT_SECRET = "71ec81c0596242b88cf4d1c463903631";
+// CLIENT_SECRET should not be exposed on the client-side
+// It should only be used in a secure server environment
+const CLIENT_SECRET = "71ec81c0596242b88cf4d1c463903631"
 
 export default function Dashboard({auth}) {
     const [searchInput, setSearchInput] = useState("");
@@ -15,12 +17,39 @@ export default function Dashboard({auth}) {
     const [showSpotifyPopup, setShowSpotifyPopup] = useState(false);
 
     useEffect(() => {
+
         // Check if there's a Spotify token in local storage
         const spotifyToken = localStorage.getItem('spotify_token');
 
-        // If no Spotify token is found, show the Spotify authorization pop-up
         if (!spotifyToken) {
-            setShowSpotifyPopup(true);
+            // If no Spotify token is found, attempt to retrieve it from the URL
+            const hash = window.location.hash.substring(1);
+            const params = new URLSearchParams(hash);
+            const token = params.get('access_token');
+
+            if (token) {
+                // If we got the token, save it in local storage
+                localStorage.setItem('spotify_token', token);
+                setAccessToken(token);
+
+                // Clear the URL fragment
+                window.location.hash = '';
+            } else {
+                // If there's no token, redirect to Spotify's authorization page
+                const AUTH_ENDPOINT = "https://accounts.spotify.com/authorize";
+                const REDIRECT_URI = window.location.origin + window.location.pathname; // Assuming your dashboard is the redirect URI
+                const SCOPES = [
+                    "user-library-read",
+                    "playlist-modify-public",
+                    "user-read-currently-playing",
+                    "user-top-read"
+                ];
+                const authUrl = `${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&scope=${encodeURIComponent(SCOPES.join(' '))}&response_type=token&show_dialog=true`;
+                window.location.href = authUrl;
+            }
+        } else {
+            // If there's a token, set the access token state
+            setAccessToken(spotifyToken);
         }
         //API ACCESS TOKEN
         var authParameters = {
