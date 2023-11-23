@@ -48,6 +48,11 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
+    }
+
     public static function generateUserName($username)
     {
         if($username === null){
@@ -59,4 +64,6 @@ class User extends Authenticatable
         }
         return $username;
     }
+
+
 }

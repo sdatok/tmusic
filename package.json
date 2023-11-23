@@ -25,6 +25,7 @@
     "dependencies": {
         "@inertiajs/inertia": "^0.11.1",
         "@inertiajs/inertia-react": "^0.8.1",
+        "@tailwindcss/line-clamp": "^0.4.4",
         "react": "^18.2.0",
         "react-bootstrap": "^2.9.1",
         "react-dom": "^18.2.0"

@@ -2,12 +2,16 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Laravel\Socialite\Facades\Socialite;
 use App\Http\Controllers\Auth\ProviderController;
 use App\Models\User;
+use App\Http\Controllers\PostController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -58,10 +62,16 @@ Route::get('/auth/google/callback', function () {
 
 
 Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
+    $posts = \App\Models\Post::latest()->get();
+    return Inertia::render('Dashboard', compact('posts'));
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+
+Route::get('/authorize-spotify',[\App\Http\Controllers\SpotifyAuthorizeController::class, 'authorizeSpotify'])->name('spotify.authorize');
+Route::get('/spotify-callback',[\App\Http\Controllers\SpotifyAuthorizeController::class, 'callback'])->name('spotify.callback');
+
 Route::middleware('auth')->group(function () {
+    Route::post('/posts', [PostController::class, 'store'])->name('posts.store');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
