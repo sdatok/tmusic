@@ -22,7 +22,10 @@ export default function Authenticated({ user, header, children }) {
 
                             <div className="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                                 <NavLink href={route('dashboard')} active={route().current('dashboard')}>
-                                    Dashboard
+                                    Post
+                                </NavLink>
+                                <NavLink href={route('chatify')} active={route().current('chatify')}>
+                                    Chat
                                 </NavLink>
                             </div>
                         </div>
