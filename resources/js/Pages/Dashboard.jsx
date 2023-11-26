@@ -6,6 +6,7 @@ import { Inertia } from '@inertiajs/inertia';
 import { router } from '@inertiajs/react';
 import {PostList} from "@/Pages/Post/PostList.jsx";
 
+
 export default function Dashboard({auth, posts, spotify}) {
     const [searchInput, setSearchInput] = useState("");
     const [accessToken, setAccessToken] = useState("");
@@ -75,6 +76,8 @@ export default function Dashboard({auth, posts, spotify}) {
             album_cover: track.album.images[0].url,
             description: "", // Initially empty; the user can enter a description
         });
+        // Clear the tracks list to make other songs disappear
+        setTracks([]);
     };
 
     const submitPost = (e) => {
@@ -83,23 +86,13 @@ export default function Dashboard({auth, posts, spotify}) {
 
             // Assuming `selectedPost` has all the data you need to submit
         router.post('/posts', selectedPost);
-            // .then(response => {
-            //     console.log('Post created:', response.data.post);
-            //     // Handle any additional actions like redirecting or updating state here.
-            // })
-            // .catch(error => {
-            //     console.error('There was an error submitting the form:', error);
-            //     // Handle errors, such as displaying validation error messages
-            // });
     };
 
     return (
         <AuthenticatedLayout
             user={auth.user}
-            header={<h2 className="font-semibold text-3xl text-gray-800 dark:text-gray-200 leading-tight">TMUsic</h2>}
         >
             <Head title="Dashboard"/>
-
             <div className="container mx-auto px-4 py-8">
                 <div className="flex items-center">
                     <input
@@ -145,21 +138,18 @@ export default function Dashboard({auth, posts, spotify}) {
                             </button>
                             </form>
                         </div>
-                        <img className="w-1/3" src={selectedPost.album_cover} alt={selectedPost.title} />
+                        <img className="w-1/3 rounded-lg" src={selectedPost.album_cover} alt={selectedPost.title} />
                     </div>
-
-                    {/*<PostList postsFor={selectedPost.artist} />*/}
                 </div>
-
             )}
-            <PostList posts={posts}/>
-
-            <div className="container mx-auto px-4">
-                <div className="grid grid-cols-4 gap-4 mx-2">
+            {/* Only render this section if there are tracks to display */}
+            {tracks.length > 0 && (
+                <div className="container mx-auto px-4 mb-8">
+                <div className="grid grid-cols-4 gap-4 mx-2 overflow-y-auto md:h-64 sm:h-8">
                     {tracks && tracks.map((track, i) => {
                         return (
                             <div
-                                className="max-w-xs overflow-hidden shadow-lg cursor-pointer"
+                                className="max-w-xs h-64 overflow-hidden shadow-lg cursor-pointer"
                                 key={i}
                                 onClick={() => handleSongClick(track)}
                             >
@@ -171,10 +161,11 @@ export default function Dashboard({auth, posts, spotify}) {
                         );
                     })}
                 </div>
-                {/* Conditionally render the SpotifyAuthPopup */}
-                {showSpotifyPopup && <SpotifyAuthPopup onClose={() => setShowSpotifyPopup(false)} />}
             </div>
-
+                )}
+            <PostList posts={posts}/>
+            {/* Conditionally render the SpotifyAuthPopup */}
+            {showSpotifyPopup && <SpotifyAuthPopup onClose={() => setShowSpotifyPopup(false)} />}
         </AuthenticatedLayout>
     );
 }

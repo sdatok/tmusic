@@ -6,6 +6,6 @@ export const PostItem = ({ post }) => (
             <div className="text-sm mb-2 text-gray-700">{post.description}</div>
             <div className="text-xs text-gray-400">{post.date}</div>
         </div>
-        <img className="w-1/3" src={post.album_cover ? post.album_cover : 'https://place-hold.it/300x300'} alt={post.title} />
+        <img className="w-1/3 rounded-lg" src={post.album_cover ? post.album_cover : 'https://place-hold.it/300x300'} alt={post.title} />
     </div>
 );
