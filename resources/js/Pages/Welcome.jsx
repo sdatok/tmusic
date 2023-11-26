@@ -8,7 +8,7 @@ export default function Welcome({ auth }) {
             <div className="min-h-screen bg-gray-100 dark:bg-gray-900 flex flex-col md:flex-row items-center justify-center p-10">
                 {/* Logo container */}
                 <div className="mb-8 md:mb-0 md:flex-1 flex justify-center">
-                    <img src={logo} alt="TMUsic Logo" className="w-48 md:w-96 lg:w-1/3 xl:w-1/4" /> {/* Adjust the size as needed */}
+                    <img src={logo} alt="TMUsic Logo" className="w-48 md:w-96 lg:w-96" /> {/* Adjust the size as needed */}
                 </div>
 
                 {/* Text and buttons container */}
