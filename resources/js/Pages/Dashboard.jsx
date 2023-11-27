@@ -93,10 +93,10 @@ export default function Dashboard({auth, posts, spotify}) {
             user={auth.user}
         >
             <Head title="Dashboard"/>
-            <div className="container mx-auto px-4 py-8">
+            <div className="container mx-auto px-8 py-8 ">
                 <div className="flex items-center">
                     <input
-                        className="border-2 border-gray-300 w-1/2 p-2 mr-2"
+                        className="rounded-md border-2 border-gray-300 w-1/2 mr-2"
                         placeholder="Search For Song"
                         type="text"
                         onKeyPress={event => {
@@ -122,7 +122,7 @@ export default function Dashboard({auth, posts, spotify}) {
                         <div className="w-2/3 p-2">
                             <form onSubmit={submitPost}>
                             <div className="text-xl font-bold">{selectedPost.title}</div>
-                            <div className="text-md mb-2 text-gray-500">{selectedPost.artist}</div>
+                            <div className="text-md mb-2 text-gray-500"> by <span className="font-bold"> {selectedPost.artist}</span></div>
                             <textarea
                                 className="text-sm border-2 border-gray-300 w-full p-2 mb-2 rounded-lg"
                                 placeholder="Type your description here"
@@ -145,7 +145,7 @@ export default function Dashboard({auth, posts, spotify}) {
             {/* Only render this section if there are tracks to display */}
             {tracks.length > 0 && (
                 <div className="container mx-auto px-4 mb-8">
-                <div className="grid grid-cols-4 gap-4 mx-2 overflow-y-auto md:h-64 sm:h-8">
+                <div className="grid grid-cols-4 gap-4 mx-2 overflow-y-auto h-32 md:h-64 sm:h-48">
                     {tracks && tracks.map((track, i) => {
                         return (
                             <div

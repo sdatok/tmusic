@@ -18,7 +18,7 @@ export default function Welcome({ auth }) {
                     {auth.user ? (
                         <Link
                             href={route('dashboard')}
-                            className="text-blue-600 hover:underline"
+                            className="block w-full px-12 py-2 text-center text-white bg-blue-600 rounded-md shadow hover:bg-blue-700"
                         >
                             Go to Dashboard
                         </Link>
