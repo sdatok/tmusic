@@ -38,7 +38,7 @@ export default function Welcome({ auth }) {
                             </Link>
                         </div>
                     )}
-                    {/* Optional: Additional text or components */}
+                    {/* Optional: Additional text or Components */}
                 </div>
             </div>
         </>
