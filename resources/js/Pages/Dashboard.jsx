@@ -30,7 +30,7 @@ export default function Dashboard({auth, posts, spotify}) {
             setAccessToken(spotifyToken);
         }
         //API ACCESS TOKEN
-        var authParameters = {
+        var authParameters = {      //spotify format, sending client id and secret
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
