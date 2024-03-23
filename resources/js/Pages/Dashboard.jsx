@@ -67,6 +67,13 @@ export default function Dashboard({auth, posts, spotify}) {
             }
         }, [searchInput, accessToken]);
 
+        useEffect(() => {
+            // If the search input is empty, clear the tracks
+            if (searchInput === "") {
+              setTracks([]);
+            }
+          }, [searchInput]);
+          
     //When a song is selected
     const handleSongClick = (track) => {
         setSelectedPost({
