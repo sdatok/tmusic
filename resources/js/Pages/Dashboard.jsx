@@ -147,22 +147,27 @@ export default function Dashboard({auth, posts, spotify}) {
             {/* Only render this section if there are tracks to display */}
             {tracks.length > 0 && (
                 <div className="container mx-auto px-4 mb-8 p-4">
-                <div className="grid grid-cols-4 gap-4 mx-2 overflow-y-auto h-32 md:h-64 sm:h-48">
-                    {tracks && tracks.map((track, i) => {
-                        return (
-                            <div
-                                className="bg-white rounded-lg max-w-xs h-56 overflow-hidden shadow-lg cursor-pointer"
-                                key={i}
-                                onClick={() => handleSongClick(track)}
-                            >
-                                <img className="w-full" src={track.album.images[0].url} alt={track.name} />
-                                <div className="px-4 py-2">
-                                    <div className="font-bold text-black text-l mb-2 line-clamp-2">{track.name}</div>
-                                </div>
-                            </div>
-                        );
-                    })}
-                </div>
+<div className="grid grid-cols-4 gap-4 mx-2 overflow-y-auto h-auto md:h-96 sm:h-40">
+{tracks && tracks.map((track, i) => {
+  return (
+    <div
+      className="bg-white rounded-lg max-w-xs shadow-lg cursor-pointer"
+      key={i}
+      onClick={() => handleSongClick(track)}
+    >
+      <img className="w-full object-cover" src={track.album.images[0].url} alt={track.name} />
+      <div className="px-4 py-2">
+        {/* Song Name */}
+        <div className="font-bold text-black text-l mb-1 line-clamp-1">{track.name}</div>
+        {/* Artist Name */}
+        <div className="text-gray-600 text-sm line-clamp-1">{track.artists.map(artist => artist.name).join(', ')}</div>
+      </div>
+    </div>
+  );
+})}
+
+</div>
+
             </div>
                 )}
             <PostList posts={posts}/>
