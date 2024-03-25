@@ -90,7 +90,7 @@ export const PostItem = ({ post }) => {
                         <img
                             src={volumeIcon}
                             alt="Volume"
-                            className="w-7 h-7 flex right-2 absolute space-x-1"
+                            className="w-8 h-8 flex right-2 absolute space-x-1"
                         />
                     </button>
                     <button
