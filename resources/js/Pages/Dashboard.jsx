@@ -12,7 +12,6 @@ export default function Dashboard({ auth, posts, spotify }) {
     const [tracks, setTracks] = useState([]);
     const [selectedPost, setSelectedPost] = useState(null);
     const [showSpotifyPopup, setShowSpotifyPopup] = useState(false);
-    const [isTracksModalOpen, setIsTracksModalOpen] = useState(false);
 
     useEffect(() => {
         // Check if there's a Spotify token in local storage
@@ -69,20 +68,6 @@ export default function Dashboard({ auth, posts, spotify }) {
         }
     };
 
-    // Function to render dropdown items
-    const renderDropdownItems = () => {
-        return tracks.map((track, index) => (
-            <a
-                key={index}
-                className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-500 hover:text-white"
-                onClick={() => handleSongClick(track)}
-            >
-                {track.name} by{" "}
-                {track.artists.map((artist) => artist.name).join(", ")}
-            </a>
-        ));
-    };
-
     useEffect(() => {
         if (searchInput !== "") {
             fetchData();
@@ -118,7 +103,9 @@ export default function Dashboard({ auth, posts, spotify }) {
         console.log(selectedPost);
 
         // Assuming `selectedPost` has all the data you need to submit
-        router.post("/posts", selectedPost);
+        Inertia.post("/posts", selectedPost).then(() => {
+            window.location.reload();
+        });
     };
 
     return (
