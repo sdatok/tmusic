@@ -14,6 +14,7 @@ class Post extends Model
         'artist',
         'description',
         'album_cover',
+        'preview_url'
     ];
 
     public function user()

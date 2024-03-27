@@ -18,6 +18,7 @@ class PostController extends Controller
             'album' => 'required|string|max:255',
             'artist' => 'required|string|max:255',
             'album_cover' => 'required|string',
+            'preview_url' => 'nullable|url',
             'description' => 'nullable|string',
         ]);
 
@@ -30,9 +31,9 @@ class PostController extends Controller
         // Return a JSON response with the created post data or a success message
 
 
-//        return response()->json([
-//            'post' => $post,
-//            'message' => 'Post created successfully.'
-//        ]);
+        //        return response()->json([
+        //            'post' => $post,
+        //            'message' => 'Post created successfully.'
+        //        ]);
     }
 }
