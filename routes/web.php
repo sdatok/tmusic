@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Laravel\Socialite\Facades\Socialite;
 use App\Http\Controllers\Auth\ProviderController;
+use App\Http\Controllers\HomeController;
 use App\Models\User;
 use App\Http\Controllers\PostController;
 
@@ -44,7 +45,7 @@ Route::get('/auth/google/callback', function () {
     $user = User::where('google_id', $googleUser->id)->first();
 
     if (!$user) {
-       $user = User::create([
+        $user = User::create([
             'google_id' => $googleUser->id,
             'name' => $googleUser->name,
             'username' => User::generateUserName($googleUser->nickname),
@@ -60,15 +61,19 @@ Route::get('/auth/google/callback', function () {
     return redirect()->route('dashboard');
 });
 
+// Moved following logic into HomeController.php for admin & user login authentication
 
-Route::get('/dashboard', function () {
-    $posts = \App\Models\Post::latest()->get();
-    return Inertia::render('Dashboard', compact('posts'));
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Route::get('/dashboard', function () {
+//     $posts = \App\Models\Post::latest()->get();
+//     return Inertia::render('Dashboard', compact('posts'));
+// })->middleware(['auth', 'verified'])->name('dashboard');
 
 
-Route::get('/authorize-spotify',[\App\Http\Controllers\SpotifyAuthorizeController::class, 'authorizeSpotify'])->name('spotify.authorize');
-Route::get('/spotify-callback',[\App\Http\Controllers\SpotifyAuthorizeController::class, 'callback'])->name('spotify.callback');
+Route::get('/dashboard', [HomeController::class, 'index'])->name('dashboard'); 
+
+
+Route::get('/authorize-spotify', [\App\Http\Controllers\SpotifyAuthorizeController::class, 'authorizeSpotify'])->name('spotify.authorize');
+Route::get('/spotify-callback', [\App\Http\Controllers\SpotifyAuthorizeController::class, 'callback'])->name('spotify.callback');
 
 Route::middleware('auth')->group(function () {
     Route::post('/posts', [PostController::class, 'store'])->name('posts.store');
@@ -77,4 +82,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
