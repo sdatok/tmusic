@@ -1,8 +1,10 @@
 import React, {useState, useRef} from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faVolumeUp, faVolumeMute, faPlay} from "@fortawesome/free-solid-svg-icons";
+import {faVolumeUp, faVolumeMute} from "@fortawesome/free-solid-svg-icons";
 import {faHeart as farHeart, faComment as farComment, faHeart, faComment} from "@fortawesome/free-regular-svg-icons";
 import {faHeart as fasHeart, faComment as fasComment} from "@fortawesome/free-solid-svg-icons";
+import {  faPlay as faPlay } from "@fortawesome/free-solid-svg-icons"; // solid icons for filled versions
+
 
 export const PostItem = ({post, spotifyUserProfile}) => {
     const [isPlaying, setIsPlaying] = useState(false);
@@ -12,11 +14,14 @@ export const PostItem = ({post, spotifyUserProfile}) => {
 
     // Toggles play/pause for the audio
     const handlePlayPause = () => {
+        console.log("Current isPlaying state before toggle:", isPlaying);
         if (audioRef.current) {
             if (isPlaying) {
                 audioRef.current.pause();
             } else {
-                audioRef.current.play();
+                // This line ensures the audio loads before attempting to play
+                audioRef.current.load();
+                audioRef.current.play().catch(error => console.error("Error playing audio:", error));
             }
             setIsPlaying(!isPlaying);
         }
@@ -51,7 +56,7 @@ export const PostItem = ({post, spotifyUserProfile}) => {
                 </div>
                 <div className="text-gray-400 flex space-x-3">
                     <button onClick={handlePlayPause}>
-                        <FontAwesomeIcon icon={faPlay} size="lg"/>
+                        <FontAwesomeIcon icon={isPlaying ? faPlay : faPlay} size="lg" />
                     </button>
                     <button>
                         <FontAwesomeIcon icon={faHeart} size="lg"/>
@@ -74,6 +79,12 @@ export const PostItem = ({post, spotifyUserProfile}) => {
                          className="object-cover object-center"/> {/* Covers the div size */}
                 </div>
             </div>
+            <audio
+                ref={audioRef}
+                onEnded={() => setIsPlaying(false)}
+                src={post.preview_url}
+                preload="none"> {/* Add preload attribute to improve loading performance */}
+            </audio>
         </div>
     );
 };
