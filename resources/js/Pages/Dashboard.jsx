@@ -105,7 +105,7 @@ export default function Dashboard({ auth, posts, spotify }) {
                 <div className="relative">
                     <input
                         className="rounded-md border-2 border-gray-300 w-1/2 mr-2"
-                        placeholder="Search For Song"
+                        placeholder="Post a Song"
                         type="text"
                         onKeyPress={(event) => {
                             if (event.key === "Enter") {
@@ -115,7 +115,7 @@ export default function Dashboard({ auth, posts, spotify }) {
                         onChange={(event) => setSearchInput(event.target.value)}
                     />
                     <button
-                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                        className="bg-blue-700 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded"
                         onClick={() => {
                             fetchData();
                         }}

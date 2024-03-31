@@ -1,11 +1,13 @@
-import React, { useState, useRef } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart as farHeart, faComment, faPlay, faVolumeUp, faVolumeMute } from "@fortawesome/free-solid-svg-icons";
+import React, {useState, useRef} from "react";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faVolumeUp, faVolumeMute, faPlay} from "@fortawesome/free-solid-svg-icons";
+import {faHeart as farHeart, faComment as farComment, faHeart, faComment} from "@fortawesome/free-regular-svg-icons";
+import {faHeart as fasHeart, faComment as fasComment} from "@fortawesome/free-solid-svg-icons";
 
-export const PostItem = ({ post, spotifyUserProfile }) => {
+export const PostItem = ({post, spotifyUserProfile}) => {
     const [isPlaying, setIsPlaying] = useState(false);
     const audioRef = useRef(null);
-    const [volume, setVolume] = useState(0.5); // Initial volume
+    const [volume, setVolume] = useState(0.5); // Initial volume setup
     const [showVolumeSlider, setShowVolumeSlider] = useState(false);
 
     // Toggles play/pause for the audio
@@ -20,7 +22,6 @@ export const PostItem = ({ post, spotifyUserProfile }) => {
         }
     };
 
-    // Updates the volume based on slider input
     const handleVolumeChange = (event) => {
         const newVolume = parseFloat(event.target.value);
         if (audioRef.current) {
@@ -29,56 +30,50 @@ export const PostItem = ({ post, spotifyUserProfile }) => {
         setVolume(newVolume);
     };
 
-    // Determine which volume icon to display
-    const volumeIcon = volume > 0 ? faVolumeUp : faVolumeMute;
+    // Assuming you have a state or a way to determine if the post is liked or commented on
+    const isLiked = false; // This should be dynamic based on your app's logic
+    const isCommented = false; // This should be dynamic based on your app's logic
 
     return (
-        <div className="bg-white shadow-lg relative mb-4 flex flex-col md:flex-row rounded-lg overflow-hidden">
-            <div className="p-4 flex flex-col justify-between flex-1">
-                <div className="mb-4">
-                    {/* Spotify user's profile picture and display name */}
-                    {spotifyUserProfile && (
-                        <div className="flex items-center mb-4">
-                            <img src={spotifyUserProfile.images[0]?.url || 'https://place-hold.it/50x50'} alt="User Profile" className="rounded-full w-8 h-8 mr-2" />
-                            <span className="font-bold">{spotifyUserProfile.display_name}</span>
-                        </div>
-                    )}
-
-                    <div className="font-bold text-lg mb-1">{post.title}</div>
-                    <p className="text-gray-600 mb-2">by {post.artist}</p>
-                    <p className="text-gray-700 mb-4">{post.description}</p>
+        <div className="text-white lg:text-xl bg-black shadow-lg mb-4 rounded-lg overflow-hidden grid grid-cols-3 md:grid-cols-3 lg:grid-cols-3">
+            <div className="col-span-2 md:col-span-2 lg:col-span-2 p-4 flex flex-col justify-between">
+                {spotifyUserProfile && (
+                    <div className="flex items-center space-x-2 mb-2">
+                        <img src={spotifyUserProfile.images[0]?.url || 'https://place-hold.it/50x50'} alt="User Profile"
+                             className="rounded-full w-8 h-8"/>
+                        <span>{spotifyUserProfile.display_name}</span>
+                    </div>
+                )}
+                <div>
+                    <div className="lg:text-xl font-bold text-sm truncate">{post.title}</div> {/* Applied truncate */}
+                    <p className="lg:text-xl text-gray-400 text-xs mb-2 truncate">by {post.artist}</p> {/* Applied truncate */}
+                    <p className="lg:text-xl text-gray-300 text-xs mb-2">{post.description}</p>
                 </div>
-
-                <div className="flex items-center space-x-4">
+                <div className="text-gray-400 flex space-x-3">
                     <button onClick={handlePlayPause}>
-                        <FontAwesomeIcon icon={faPlay} size="lg" />
+                        <FontAwesomeIcon icon={faPlay} size="lg"/>
                     </button>
                     <button>
-                        <FontAwesomeIcon icon={farHeart} size="lg" />
+                        <FontAwesomeIcon icon={faHeart} size="lg"/>
                     </button>
                     <button>
-                        <FontAwesomeIcon icon={faComment} size="lg" />
+                        <FontAwesomeIcon icon={faComment} size="lg"/>
                     </button>
                     <button onClick={() => setShowVolumeSlider(!showVolumeSlider)}>
-                        <FontAwesomeIcon icon={volumeIcon} size="lg" />
+                        <FontAwesomeIcon icon={volume > 0 ? faVolumeUp : faVolumeMute} size="lg"/>
                     </button>
                     {showVolumeSlider && (
-                        <input
-                            type="range"
-                            min="0"
-                            max="1"
-                            step="0.01"
-                            value={volume}
-                            onChange={handleVolumeChange}
-                            className="w-24"
-                        />
+                        <input type="range" min="0" max="1" step="0.01" value={volume} onChange={handleVolumeChange}
+                               className="w-20"/>
                     )}
                 </div>
             </div>
-            <div className="md:w-48 flex-none">
-                <img src={post.album_cover || "https://place-hold.it/300x300"} alt={post.title} className="object-cover w-full h-full" />
+            <div className="pr-4 col-span-1 sm:col-span-1 md:col-span-1 lg:col-span-1 flex justify-center items-center">
+                <div className="aspect-w-1 aspect-h-1 w-full max-w-xs"> {/* Adjust the max-w-* class as needed */}
+                    <img src={post.album_cover || "https://place-hold.it/300x300"} alt={post.title}
+                         className="object-cover object-center"/> {/* Covers the div size */}
+                </div>
             </div>
-            <audio ref={audioRef} onEnded={() => setIsPlaying(false)} src={post.preview_url}></audio>
         </div>
     );
 };
