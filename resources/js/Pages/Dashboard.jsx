@@ -6,65 +6,42 @@ import { Inertia } from "@inertiajs/inertia";
 import { router } from "@inertiajs/react";
 import { PostList } from "@/Pages/Post/PostList.jsx";
 
+
 export default function Dashboard({ auth, posts, spotify }) {
     const [searchInput, setSearchInput] = useState("");
     const [accessToken, setAccessToken] = useState("");
     const [tracks, setTracks] = useState([]);
     const [selectedPost, setSelectedPost] = useState(null);
-    const [showSpotifyPopup, setShowSpotifyPopup] = useState(false);
+
 
     useEffect(() => {
-        // Check if there's a Spotify token in local storage
-        const spotifyToken = spotify.token;
-        const CLIENT_ID = spotify.client_id;
-        const CLIENT_SECRET = spotify.client_secret;
+        const accessToken = localStorage.getItem('spotifyAccessToken');
+        const tokenExpiry = localStorage.getItem('spotifyTokenExpiry');
+        const now = new Date();
 
-        if (!spotifyToken) {
-            // Redirect to your Laravel route for authorization
+        if (!accessToken || now > parseInt(tokenExpiry)) {
+            // Redirect to Spotify authorization if no valid token is found
             window.location.href = "/authorize-spotify";
-        } else {
-            setAccessToken(spotifyToken);
         }
-        //API ACCESS TOKEN
-        var authParameters = {
-            //spotify format, sending client id and secret
-            method: "POST",
-            headers: {
-                "Content-Type": "application/x-www-form-urlencoded",
-            },
-            body:
-                "grant_type=client_credentials&client_id=" +
-                CLIENT_ID +
-                "&client_secret=" +
-                CLIENT_SECRET,
-        };
-        fetch("https://accounts.spotify.com/api/token", authParameters)
-            .then((result) => result.json())
-            .then((data) => setAccessToken(data.access_token));
-    }, []);
+    }, [accessToken]);
 
     const fetchData = async () => {
-        try {
-            var searchParameters = {
-                method: "GET",
-                headers: {
-                    "Content-type": "application/json",
-                    Authorization: "Bearer " + accessToken,
-                },
-            };
+        if (!searchInput.trim()) return;
 
-            const response = await fetch(
-                "https://api.spotify.com/v1/search?q=" +
-                    searchInput +
-                    "&type=track",
-                searchParameters
-            );
+        const accessToken = localStorage.getItem('spotifyAccessToken');
+
+        try {
+            const response = await fetch(`https://api.spotify.com/v1/search?q=${encodeURIComponent(searchInput)}&type=track`, {
+                headers: {
+                    "Authorization": `Bearer ${accessToken}`,
+                    "Content-Type": "application/json",
+                },
+            });
+
             const data = await response.json();
-            // console.log(data.tracks.items);
             setTracks(data.tracks.items);
-            setIsTracksModalOpen(true); // Open the modal with search results
         } catch (error) {
-            console.error("Error fetching data", error);
+            console.error("Error fetching data:", error);
         }
     };
 
@@ -87,7 +64,7 @@ export default function Dashboard({ auth, posts, spotify }) {
         setSelectedPost({
             title: track.name,
             album: track.album.name,
-            artist: track.artists[0].name,
+            artist: track.artists.map((artist) => artist.name).join(", "),
             album_cover: track.album.images[0].url,
             user: auth.user,
             preview_url: track.preview_url,
@@ -98,10 +75,7 @@ export default function Dashboard({ auth, posts, spotify }) {
     };
 
     const submitPost = (e) => {
-        // e is the button.. or the event...
         e.preventDefault();
-        console.log(selectedPost);
-
         // Assuming `selectedPost` has all the data you need to submit
         Inertia.post("/posts", selectedPost).then(() => {
             window.location.reload();
@@ -221,9 +195,9 @@ export default function Dashboard({ auth, posts, spotify }) {
             )}
             <PostList posts={posts} />
             {/* Conditionally render the SpotifyAuthPopup */}
-            {showSpotifyPopup && (
-                <SpotifyAuthPopup onClose={() => setShowSpotifyPopup(false)} />
-            )}
+            {/*{showSpotifyPopup && (*/}
+            {/*    <SpotifyAuthPopup onClose={() => setShowSpotifyPopup(false)} />*/}
+            {/*)}*/}
         </AuthenticatedLayout>
     );
 }

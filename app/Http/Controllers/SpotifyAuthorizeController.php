@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Settings\GeneralSetting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Redirect;
 
 class SpotifyAuthorizeController extends Controller
 {
@@ -18,26 +20,31 @@ class SpotifyAuthorizeController extends Controller
             'show_dialog' => 'true',
         ]);
 
-        return redirect("https://accounts.spotify.com/authorize?$query");
+        return redirect()->to("https://accounts.spotify.com/authorize?$query");
     }
 
-    public function callback(GeneralSetting $settings)
+    public function callback(Request $request)
     {
         $response = Http::asForm()->post('https://accounts.spotify.com/api/token', [
             'grant_type' => 'authorization_code',
-            'code' => request()->code,
+            'code' => $request->code,
             'redirect_uri' => route('spotify.callback'),
             'client_id' => config('spotify.client_id'),
             'client_secret' => config('spotify.client_secret'),
         ]);
 
-        $spotify_response = $response->json();
+        $data = $response->json();
 
-        $settings->spotify_token = $spotify_response['access_token'] ?? '';
-        $settings->spotify_token_expiry = $spotify_response['expires_in'] ?? '';
-        $settings->save();
+        $data = $response->json();
 
-        return redirect(route('dashboard'));
+        if (isset($data['access_token'])) {
+            // Redirect with token and expiry time
+            return redirect()->to('/spotify-auth-success?token=' . $data['access_token'] . '&expiresIn=' . $data['expires_in']);
+        } else {
+            // Log the error or handle it as needed
+            // Redirect to the homepage with an error message that authorization failed
+            return Redirect::to('/')->with('error', 'Spotify authorization failed. Please try again.');
+        }
 
     }
 }
