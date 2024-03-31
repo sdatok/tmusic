@@ -12,6 +12,7 @@ export default function Dashboard({ auth, posts, spotify }) {
     const [accessToken, setAccessToken] = useState("");
     const [tracks, setTracks] = useState([]);
     const [selectedPost, setSelectedPost] = useState(null);
+    const [spotifyUserProfile, setSpotifyUserProfile] = useState(null); // Add this line
 
 
     useEffect(() => {
@@ -22,8 +23,23 @@ export default function Dashboard({ auth, posts, spotify }) {
         if (!accessToken || now > parseInt(tokenExpiry)) {
             // Redirect to Spotify authorization if no valid token is found
             window.location.href = "/authorize-spotify";
+        }else{
+            fetchSpotifyUserProfile(accessToken);
         }
     }, [accessToken]);
+
+    const fetchSpotifyUserProfile = async (accessToken) => {
+        try {
+            const response = await fetch("https://api.spotify.com/v1/me", {
+                headers: { Authorization: `Bearer ${accessToken}` },
+            });
+            if (!response.ok) throw new Error('Failed to fetch Spotify user profile');
+            const userProfileData = await response.json();
+            setSpotifyUserProfile(userProfileData); // Set user profile data
+        } catch (error) {
+            console.error("Error fetching Spotify user profile:", error);
+        }
+    };
 
     const fetchData = async () => {
         if (!searchInput.trim()) return;
@@ -60,7 +76,7 @@ export default function Dashboard({ auth, posts, spotify }) {
 
     //When a song is selected
     const handleSongClick = (track) => {
-        console.log(track);
+        // console.log(track);
         setSelectedPost({
             title: track.name,
             album: track.album.name,
@@ -193,7 +209,7 @@ export default function Dashboard({ auth, posts, spotify }) {
                     </div>
                 </div>
             )}
-            <PostList posts={posts} />
+            <PostList posts={posts} spotifyUserProfile={spotifyUserProfile} />
             {/* Conditionally render the SpotifyAuthPopup */}
             {/*{showSpotifyPopup && (*/}
             {/*    <SpotifyAuthPopup onClose={() => setShowSpotifyPopup(false)} />*/}
