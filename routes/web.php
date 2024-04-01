@@ -69,11 +69,14 @@ Route::get('/auth/google/callback', function () {
 // })->middleware(['auth', 'verified'])->name('dashboard');
 
 
-Route::get('/dashboard', [HomeController::class, 'index'])->name('dashboard'); 
+Route::get('/dashboard', [HomeController::class, 'index'])->name('dashboard');
 
 
 Route::get('/authorize-spotify', [\App\Http\Controllers\SpotifyAuthorizeController::class, 'authorizeSpotify'])->name('spotify.authorize');
 Route::get('/spotify-callback', [\App\Http\Controllers\SpotifyAuthorizeController::class, 'callback'])->name('spotify.callback');
+Route::get('/spotify-auth-success', function () {
+    return view('spotify-auth-success');
+});
 
 Route::middleware('auth')->group(function () {
     Route::post('/posts', [PostController::class, 'store'])->name('posts.store');
