@@ -16,7 +16,12 @@ export default {
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
             },
+            colors: {
+                'midnight': '#121212',
+                'spotifygray': '#373a3d'
+            }
         },
+
     },
 
     plugins: [forms, lineClamp],

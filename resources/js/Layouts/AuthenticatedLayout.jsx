@@ -10,8 +10,8 @@ export default function Authenticated({user, header, children}) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
 
     return (
-        <div className="min-h-screen bg-gray-100 dark:bg-gray-900">
-            <nav className="bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700">
+        <div className="min-h-screen bg-black">
+            <nav className="bg-spotifygray border-b border-gray-100 dark:border-gray-700">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex justify-between h-24">
                         <div className="flex">
@@ -20,12 +20,12 @@ export default function Authenticated({user, header, children}) {
                                     <img
                                         src={logo}
                                         alt="TMUsic Logo"
-                                        className="h-16" // Adjust based on the size of your navbar
+                                        className="h-24 md:h-28 lg:h-28" // Adjust based on the size of your navbar
                                     />
                                 </Link>
                             </div>
 
-                            <div className="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                            <div className="lg:text-xl font-bold text-sm hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                                 <NavLink href={route('dashboard')} active={route().current('dashboard')}>
                                     Post
                                 </NavLink>
