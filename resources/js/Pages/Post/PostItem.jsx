@@ -1,4 +1,4 @@
-import React, {useState, useRef} from "react";
+import React, {useState, useRef, useEffect} from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faVolumeUp, faVolumeMute} from "@fortawesome/free-solid-svg-icons";
 import {faHeart as farHeart, faComment as farComment, faHeart, faComment} from "@fortawesome/free-regular-svg-icons";
@@ -6,12 +6,16 @@ import {faHeart as fasHeart, faComment as fasComment} from "@fortawesome/free-so
 import {  faPlay as faPlay } from "@fortawesome/free-solid-svg-icons"; // solid icons for filled versions
 
 
-export const PostItem = ({post, spotifyUserProfile}) => {
+const PostItem = ({post, spotifyUserProfile, volume, onVolumeChange}) => {
     const [isPlaying, setIsPlaying] = useState(false);
     const audioRef = useRef(null);
-    const [volume, setVolume] = useState(0.5); // Initial volume setup
     const [showVolumeSlider, setShowVolumeSlider] = useState(false);
 
+    useEffect(() => {
+        if (audioRef.current) {
+            audioRef.current.volume = volume;
+        }
+    }, [volume]);
     // Toggles play/pause for the audio
     const handlePlayPause = () => {
         console.log("Current isPlaying state before toggle:", isPlaying);
@@ -26,13 +30,8 @@ export const PostItem = ({post, spotifyUserProfile}) => {
             setIsPlaying(!isPlaying);
         }
     };
-
-    const handleVolumeChange = (event) => {
-        const newVolume = parseFloat(event.target.value);
-        if (audioRef.current) {
-            audioRef.current.volume = newVolume;
-        }
-        setVolume(newVolume);
+    const localHandleVolumeChange = (event) => {
+        onVolumeChange(parseFloat(event.target.value)); // Use the function passed from parent to change volume
     };
 
     // Assuming you have a state or a way to determine if the post is liked or commented on
@@ -40,7 +39,7 @@ export const PostItem = ({post, spotifyUserProfile}) => {
     const isCommented = false; // This should be dynamic based on your app's logic
 
     return (
-        <div className="text-white lg:text-xl bg-black shadow-lg mb-4 rounded-lg overflow-hidden grid grid-cols-3 md:grid-cols-3 lg:grid-cols-3">
+        <div className="text-white lg:text-xl bg-midnight shadow-lg mb-4 rounded-lg overflow-hidden grid grid-cols-3 md:grid-cols-3 lg:grid-cols-3">
             <div className="col-span-2 md:col-span-2 lg:col-span-2 p-4 flex flex-col justify-between">
                 {spotifyUserProfile && (
                     <div className="flex items-center space-x-2 mb-2">
@@ -68,15 +67,14 @@ export const PostItem = ({post, spotifyUserProfile}) => {
                         <FontAwesomeIcon icon={volume > 0 ? faVolumeUp : faVolumeMute} size="lg"/>
                     </button>
                     {showVolumeSlider && (
-                        <input type="range" min="0" max="1" step="0.01" value={volume} onChange={handleVolumeChange}
-                               className="w-20"/>
+                        <input type="range" min="0" max="1" step="0.01" value={volume} onChange={localHandleVolumeChange} className="w-20"/>
                     )}
                 </div>
             </div>
-            <div className="pr-4 col-span-1 sm:col-span-1 md:col-span-1 lg:col-span-1 flex justify-center items-center">
-                <div className="aspect-w-1 aspect-h-1 w-full max-w-xs"> {/* Adjust the max-w-* class as needed */}
+            <div className="pr-4 md:p-4 col-span-1 sm:col-span-1 md:col-span-1 lg:col-span-1 flex justify-center items-center">
+                <div className="rounded-lg aspect-w-1 aspect-h-1 w-full max-w-xs"> {/* Adjust the max-w-* class as needed */}
                     <img src={post.album_cover || "https://place-hold.it/300x300"} alt={post.title}
-                         className="object-cover object-center"/> {/* Covers the div size */}
+                         className="object-cover object-center rounded-lg"/> {/* Covers the div size */}
                 </div>
             </div>
             <audio
@@ -88,3 +86,5 @@ export const PostItem = ({post, spotifyUserProfile}) => {
         </div>
     );
 };
+
+export default PostItem;
