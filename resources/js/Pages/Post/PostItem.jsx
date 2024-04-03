@@ -1,6 +1,6 @@
 import React, {useState, useRef, useEffect} from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faVolumeUp, faVolumeMute} from "@fortawesome/free-solid-svg-icons";
+import {faVolumeUp, faVolumeMute, faPause} from "@fortawesome/free-solid-svg-icons";
 import {faHeart as farHeart, faComment as farComment, faHeart, faComment} from "@fortawesome/free-regular-svg-icons";
 import {faHeart as fasHeart, faComment as fasComment} from "@fortawesome/free-solid-svg-icons";
 import {  faPlay as faPlay } from "@fortawesome/free-solid-svg-icons"; // solid icons for filled versions
@@ -49,13 +49,13 @@ const PostItem = ({post, spotifyUserProfile, volume, onVolumeChange}) => {
                     </div>
                 )}
                 <div>
-                    <div className="lg:text-xl font-bold text-sm truncate">{post.title}</div> {/* Applied truncate */}
-                    <p className="lg:text-xl text-gray-400 text-xs mb-2 truncate">by {post.artist}</p> {/* Applied truncate */}
-                    <p className="lg:text-xl text-gray-300 text-xs mb-2">{post.description}</p>
+                    <div className="lg:text-xl md:text-xl font-bold text-sm truncate">{post.title}</div> {/* Applied truncate */}
+                    <p className="lg:text-xl md:text-xl text-gray-400 text-xs mb-2 truncate">by {post.artist}</p> {/* Applied truncate */}
+                    <p className="lg:text-xl md:text-xl text-gray-300 text-xs mb-2">{post.description}</p>
                 </div>
                 <div className="text-gray-400 flex space-x-3">
-                    <button onClick={handlePlayPause}>
-                        <FontAwesomeIcon icon={isPlaying ? faPlay : faPlay} size="lg" />
+                    <button onClick={handlePlayPause} className="inline-flex items-center">
+                        <FontAwesomeIcon icon={isPlaying ? faPause : faPlay} size="lg" className="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300" />
                     </button>
                     <button>
                         <FontAwesomeIcon icon={faHeart} size="lg"/>

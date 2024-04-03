@@ -20,7 +20,7 @@ export default function Dashboard({ auth, posts, spotify }) {
         const tokenExpiry = localStorage.getItem('spotifyTokenExpiry');
         const now = new Date();
 
-        if (!accessToken || now > parseInt(tokenExpiry)) {
+        if (!accessToken || now > parseInt(tokenExpiry, 10)) {
             // Redirect to Spotify authorization if no valid token is found
             window.location.href = "/authorize-spotify";
         }else{
@@ -101,7 +101,7 @@ export default function Dashboard({ auth, posts, spotify }) {
     return (
         <AuthenticatedLayout user={auth.user}>
             <Head title="Dashboard" />
-            <div className="container mx-auto px-8 py-8 ">
+            <div className="md:ml-20 mx-auto px-8 py-8 ">
                 <div className="relative">
                     <input
                         className="rounded-md border-2 border-gray-300 w-1/2 mr-2"
@@ -127,24 +127,24 @@ export default function Dashboard({ auth, posts, spotify }) {
 
             {/* Only render this section if there are tracks to display */}
             {tracks.length > 0 && (
-                <div className="container mx-auto px-4 mb-8 p-4">
-                    <div className="grid grid-cols-4 gap-4 mx-2 overflow-y-auto h-auto md:h-96 sm:h-40">
+                <div className="container mx-auto px-4 mb-8 p-2">
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mx-2 overflow-y-auto h-56 md:h-96">
                         {tracks &&
                             tracks.map((track, i) => {
                                 return (
                                     <div
-                                        className="bg-white rounded-lg max-w-xs shadow-lg cursor-pointer"
+                                        className="bg-gray-200 rounded-lg max-w-xs shadow-lg cursor-pointer"
                                         key={i}
                                         onClick={() => handleSongClick(track)}
                                     >
                                         <img
-                                            className="w-full object-cover"
+                                            className="w-full object-cover rounded-md"
                                             src={track.album.images[0].url}
                                             alt={track.name}
                                         />
                                         <div className="px-4 py-2">
                                             {/* Song Name */}
-                                            <div className="font-bold text-black text-l mb-1 line-clamp-1">
+                                            <div className="font-bold text-black text-lg line-clamp-1">
                                                 {track.name}
                                             </div>
                                             {/* Artist Name */}
@@ -164,24 +164,22 @@ export default function Dashboard({ auth, posts, spotify }) {
             )}
 
             {selectedPost && (
-                <div className="container mx-auto px-4 mb-8">
-                    <div className="max-w-xl mx-auto bg-white rounded-lg overflow-hidden shadow-lg relative mb-4 grid grid-cols-12">
-                        <div className="col-span-8 p-4 flex flex-col justify-between">
+                <div className="px-6 md:px-12 md:w lg:px-32">
+                    <div className="bg-midnight rounded-lg overflow-hidden shadow-lg relative mb-4 grid grid-cols-3">
+                        <div className="col-span-2 p-4 flex flex-col justify-between">
                             <form onSubmit={submitPost}>
-                                <div className="text-xl font-bold">
+                                <div className="text-white text-md font-bold truncate">
                                     {selectedPost.title}
                                 </div>
-                                <div className="text-md mb-2 text-gray-500">
-                                    {" "}
-                                    by{" "}
-                                    <span className="font-bold">
+                                <div className="text-sm mb-2 text-gray-400 truncate">
+                                    <span className="">
                                         {selectedPost.artist}
                                     </span>
                                 </div>
 
                                 <textarea
                                     className="text-sm border-2 border-gray-300 w-full p-2 mb-2 rounded-lg"
-                                    placeholder="Type your description here"
+                                    placeholder="Description"
                                     value={selectedPost.description}
                                     onChange={(event) =>
                                         setSelectedPost({
@@ -193,15 +191,15 @@ export default function Dashboard({ auth, posts, spotify }) {
                                 />
                                 <button
                                     type="submit"
-                                    className="bg-blue-500 hover:bg-blue-700 text-white text-sm font-bold py-1 px-2 rounded"
+                                    className="bg-blue-700 hover:bg-blue-700 text-white text-xs md:text-lg font-bold py-1 px-4 md:px-6 md:rounded-lg rounded"
                                 >
-                                    Submit
+                                    Post
                                 </button>
                             </form>
                         </div>
-                        <div className="col-span-4">
+                        <div className="col-span-1 flex justify-center items-center pr-4 md:p-4">
                             <img
-                                className="w-full h-full object-cover"
+                                className="rounded-lg aspect-w-1 aspect-h-1 w-full max-w-xs"
                                 src={selectedPost.album_cover}
                                 alt={selectedPost.title}
                             />
