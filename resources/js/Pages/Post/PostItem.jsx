@@ -49,9 +49,9 @@ const PostItem = ({post, spotifyUserProfile, volume, onVolumeChange}) => {
                     </div>
                 )}
                 <div>
-                    <div className="lg:text-xl font-bold text-sm truncate">{post.title}</div> {/* Applied truncate */}
-                    <p className="lg:text-xl text-gray-400 text-xs mb-2 truncate">by {post.artist}</p> {/* Applied truncate */}
-                    <p className="lg:text-xl text-gray-300 text-xs mb-2">{post.description}</p>
+                    <div className="lg:text-xl md:text-xl font-bold text-sm truncate">{post.title}</div> {/* Applied truncate */}
+                    <p className="lg:text-xl md:text-xl text-gray-400 text-xs mb-2 truncate">by {post.artist}</p> {/* Applied truncate */}
+                    <p className="lg:text-xl md:text-xl text-gray-300 text-xs mb-2">{post.description}</p>
                 </div>
                 <div className="text-gray-400 flex space-x-3">
                     <button onClick={handlePlayPause} className="inline-flex items-center">
