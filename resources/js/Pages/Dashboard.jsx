@@ -20,7 +20,7 @@ export default function Dashboard({ auth, posts, spotify }) {
         const tokenExpiry = localStorage.getItem('spotifyTokenExpiry');
         const now = new Date();
 
-        if (!accessToken || now > parseInt(tokenExpiry)) {
+        if (!accessToken || now > parseInt(tokenExpiry, 10)) {
             // Redirect to Spotify authorization if no valid token is found
             window.location.href = "/authorize-spotify";
         }else{

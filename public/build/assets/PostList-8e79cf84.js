@@ -1,1 +1,0 @@
-import{r as n,j as s}from"./app-d575b866.js";import l from"./PostItem-7e945bc5.js";const x=({posts:e,spotifyUserProfile:o})=>{const[m,a]=n.useState(.5),r=t=>{a(t)};return s.jsx("div",{className:"px-6 md:px-12 lg:px-32",children:e.map(t=>s.jsx(l,{post:t,spotifyUserProfile:o,volume:m,onVolumeChange:r},t.id))})},u=x;export{u as default};
