@@ -15,7 +15,7 @@ export default function Welcome({ auth }) {
 
                 {/* Text and buttons container */}
                 <div className="flex flex-col items-center md:flex-1  text-center md:text-left">
-                    <h1 className="text-5xl font-bold mb-6 text-white">Happening Nowr</h1>
+                    <h1 className="text-5xl font-bold mb-6 text-white">Happening Now</h1>
                     <p className="text-lg mb-6 text-white">Join today.</p>
                     {auth.user ? (
                         <Link

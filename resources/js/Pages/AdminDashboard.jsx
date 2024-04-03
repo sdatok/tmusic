@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import SpotifyAuthPopup from "@/Pages/SpotifyAuthPopup.jsx";
 import { Inertia } from "@inertiajs/inertia";
 import { router } from "@inertiajs/react";
-import { PostList } from "@/Pages/Post/PostList.jsx";
+import PostList  from "@/Pages/Post/PostList.jsx";
 
 export default function Dashboard({ auth, posts, spotify }) {
     const [searchInput, setSearchInput] = useState("");
