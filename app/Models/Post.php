@@ -18,6 +18,7 @@ class Post extends Model
         'song_id',
     ];
 
+
     public function user()
     {
         return $this->belongsTo(User::class);

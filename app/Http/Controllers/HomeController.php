@@ -29,7 +29,7 @@ class HomeController extends Controller
         if (Auth::check()) { // Use Auth::check() for a cleaner approach
             $usertype = Auth::user()->usertype;
             if ($usertype == 'user') {
-                $posts = \App\Models\Post::latest()->get();
+                $posts = \App\Models\Post::with('user')->latest()->get();
                 return Inertia::render('Dashboard', compact('posts'));
             } elseif ($usertype == 'admin') {
                 $posts = \App\Models\Post::latest()->get();

@@ -12,7 +12,6 @@ const PostItem = ({post, user, spotifyUserProfile, volume, onLikeCountChange, li
     const [showVolumeSlider, setShowVolumeSlider] = useState(false);
     const [liked, setLiked] = useState(false);
 
-
     // on click of the like button, toggle the liked state and send a request to the server to update the liked status
     const handleLike = () => {
 
@@ -26,7 +25,6 @@ const PostItem = ({post, user, spotifyUserProfile, volume, onLikeCountChange, li
             postId: post.id,
             liked: !liked
         }).then((response) => {
-            console.log(response.data);
             // setLiked(response.data);
         });
 
@@ -85,7 +83,7 @@ const PostItem = ({post, user, spotifyUserProfile, volume, onLikeCountChange, li
                     <div className="flex items-center space-x-2 mb-2">
                         <img src={spotifyUserProfile.images[0]?.url || 'https://place-hold.it/50x50'} alt="User Profile"
                              className="rounded-full w-8 h-8"/>
-                        <span>{spotifyUserProfile.display_name}</span>
+                        <span>{post.user.name}</span>
                     </div>
                 )}
                 <div>
