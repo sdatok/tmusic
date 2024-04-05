@@ -69,6 +69,7 @@ const PostItem = ({post, user, spotifyUserProfile, volume, onLikeCountChange, li
             setIsPlaying(!isPlaying);
         }
     };
+
     const localHandleVolumeChange = (event) => {
         onVolumeChange(parseFloat(event.target.value)); // Use the function passed from parent to change volume
     };
@@ -81,7 +82,7 @@ const PostItem = ({post, user, spotifyUserProfile, volume, onLikeCountChange, li
             <div className="col-span-2 md:col-span-2 lg:col-span-2 p-4 flex flex-col justify-between">
                 {spotifyUserProfile && (
                     <div className="flex items-center space-x-2 mb-2">
-                        <img src={spotifyUserProfile.images[0]?.url || 'https://place-hold.it/50x50'} alt="User Profile"
+                        <img src={post.user.profile_url ? post.user.profile_url : '/images/default.png'} alt="User Profile"
                              className="rounded-full w-8 h-8"/>
                         <span>{post.user.name}</span>
                     </div>

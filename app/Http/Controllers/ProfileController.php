@@ -13,6 +13,24 @@ use Inertia\Response;
 
 class ProfileController extends Controller
 {
+
+    public function updateUserImage(Request $request)
+    {
+        $user = $request->user();
+        $user->update([
+            'profile_url' => $request->profile_url,
+        ]);
+    }
+
+    public function updateUserName(Request $request)
+    {
+        $user = $request->user();
+        $user->update([
+            'name' => $request->name,
+        ]);
+    }
+
+
     /**
      * Display the user's profile form.
      */

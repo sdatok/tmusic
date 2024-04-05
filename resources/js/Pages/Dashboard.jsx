@@ -36,6 +36,25 @@ export default function Dashboard({ auth, posts, spotify }) {
             });
             if (!response.ok) throw new Error('Failed to fetch Spotify user profile');
             const userProfileData = await response.json();
+
+            let userImage = null;
+            // get the user's image in a variable if exists
+            if (userProfileData.images.length) {
+                 userImage = userProfileData.images.reverse()[0].url;
+
+                console.log(userImage);
+                 // axios post to save the user's image
+                    axios.post('/update-user-image', {
+                        profile_url: userImage
+                    });
+            }
+
+            axios.post('/update-user-name', {
+                name: userProfileData.display_name,
+            });
+
+
+
             setSpotifyUserProfile(userProfileData); // Set user profile data
         } catch (error) {
             console.error("Error fetching Spotify user profile:", error);
