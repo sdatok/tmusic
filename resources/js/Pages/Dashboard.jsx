@@ -14,24 +14,37 @@ export default function Dashboard({ auth, posts, spotify }) {
     const [selectedPost, setSelectedPost] = useState(null);
     const [spotifyUserProfile, setSpotifyUserProfile] = useState(null); // Add this line
 
-
+    // useEffect(() => {
+    //     const accessToken = localStorage.getItem('spotifyAccessToken');
+    //     const tokenExpiry = localStorage.getItem('spotifyTokenExpiry');
+    //     const now = new Date();
+    //
+    //     if (!accessToken || now > parseInt(tokenExpiry, 10)) {
+    //         // Redirect to Spotify authorization if no valid token is found
+    //         window.location.href = "/authorize-spotify";
+    //     }else{
+    //         fetchSpotifyUserProfile(accessToken);
+    //     }
+    // }, [accessToken]);
     useEffect(() => {
-        const accessToken = localStorage.getItem('spotifyAccessToken');
-        const tokenExpiry = localStorage.getItem('spotifyTokenExpiry');
-        const now = new Date();
+        // Fetch the Spotify session data from the backend
+        fetch('/api/spotify-session')
+            .then(response => response.json())
+            .then(data => {
+                const now = new Date().getTime() / 1000; // Convert current time to seconds
+                if (!data.spotify_access_token || now > data.spotify_token_expires) {
+                    window.location.href = "/authorize-spotify"; // Redirect to authorization if needed
+                } else {
+                    setAccessToken(data.spotify_access_token);
+                    fetchSpotifyUserProfile(data.spotify_access_token);
+                }
+            });
+    }, []);
 
-        if (!accessToken || now > parseInt(tokenExpiry, 10)) {
-            // Redirect to Spotify authorization if no valid token is found
-            window.location.href = "/authorize-spotify";
-        }else{
-            fetchSpotifyUserProfile(accessToken);
-        }
-    }, [accessToken]);
-
-    const fetchSpotifyUserProfile = async (accessToken) => {
+    const fetchSpotifyUserProfile = async (token) => {
         try {
             const response = await fetch("https://api.spotify.com/v1/me", {
-                headers: { Authorization: `Bearer ${accessToken}` },
+                headers: { Authorization: `Bearer ${token}` },
             });
             if (!response.ok) throw new Error('Failed to fetch Spotify user profile');
             const userProfileData = await response.json();
@@ -43,9 +56,6 @@ export default function Dashboard({ auth, posts, spotify }) {
 
     const fetchData = async () => {
         if (!searchInput.trim()) return;
-
-        const accessToken = localStorage.getItem('spotifyAccessToken');
-
         try {
             const response = await fetch(`https://api.spotify.com/v1/search?q=${encodeURIComponent(searchInput)}&type=track`, {
                 headers: {
@@ -60,6 +70,7 @@ export default function Dashboard({ auth, posts, spotify }) {
             console.error("Error fetching data:", error);
         }
     };
+
 
     useEffect(() => {
         if (searchInput !== "") {
