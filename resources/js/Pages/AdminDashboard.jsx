@@ -19,8 +19,6 @@ export default function Dashboard({ auth, posts, spotify }) {
         const CLIENT_ID = spotify.client_id;
         const CLIENT_SECRET = spotify.client_secret;
 
-        console.log("admin dashboard");
-
         if (!spotifyToken) {
             // Redirect to your Laravel route for authorization
             window.location.href = "/authorize-spotify";

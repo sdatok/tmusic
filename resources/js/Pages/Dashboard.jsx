@@ -1,13 +1,13 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { Head } from "@inertiajs/react";
+import {Head} from "@inertiajs/react";
 import {useCallback, useEffect, useState} from "react";
-import { Inertia } from "@inertiajs/inertia";
-import { router } from "@inertiajs/react";
+import {Inertia} from "@inertiajs/inertia";
+import {router} from "@inertiajs/react";
 import PostList from "@/Pages/Post/PostList.jsx";
-import { WebPlaybackSDK, usePlaybackState } from "react-spotify-web-playback-sdk";
+import {WebPlaybackSDK, usePlaybackState} from "react-spotify-web-playback-sdk";
 
 
-export default function Dashboard({ auth, posts, spotify }) {
+export default function Dashboard({auth, posts, spotify}) {
     const [searchInput, setSearchInput] = useState("");
     const [accessToken, setAccessToken] = useState("");
     const [tracks, setTracks] = useState([]);
@@ -15,10 +15,13 @@ export default function Dashboard({ auth, posts, spotify }) {
     const [spotifyUserProfile, setSpotifyUserProfile] = useState(null); // Add this line
 
     useEffect(() => {
-         if(auth.user.spotify_token_expires_at < new Date().getTime() / 1000) {
-             window.location.href = "/authorize-spotify";
-         } else if (!auth.user.spotify_token || !auth.user.spotify_refresh_token) {
+        if (auth.user.spotify_token_expires_at < new Date().getTime() / 1000) {
             window.location.href = "/authorize-spotify";
+        } else if (!auth.user.spotify_token || !auth.user.spotify_refresh_token) {
+            window.location.href = "/authorize-spotify";
+        } else {
+            setAccessToken(auth.user.spotify_token);
+            fetchSpotifyUserProfile(auth.user.spotify_token);
         }
     }, []);
 
@@ -55,7 +58,7 @@ export default function Dashboard({ auth, posts, spotify }) {
     const fetchSpotifyUserProfile = async (token) => {
         try {
             const response = await fetch("https://api.spotify.com/v1/me", {
-                headers: { Authorization: `Bearer ${token}` },
+                headers: {Authorization: `Bearer ${token}`},
             });
             if (!response.ok) throw new Error('Failed to fetch Spotify user profile');
             const userProfileData = await response.json();
@@ -63,19 +66,17 @@ export default function Dashboard({ auth, posts, spotify }) {
             let userImage = null;
             // get the user's image in a variable if exists
             if (userProfileData.images.length) {
-                 userImage = userProfileData.images.reverse()[0].url;
+                userImage = userProfileData.images.reverse()[0].url;
 
-                console.log(userImage);
-                 // axios post to save the user's image
-                    axios.post('/update-user-image', {
-                        profile_url: userImage
-                    });
+                // axios post to save the user's image
+                axios.post('/update-user-image', {
+                    profile_url: userImage
+                });
             }
 
             axios.post('/update-user-name', {
                 name: userProfileData.display_name,
             });
-
 
 
             setSpotifyUserProfile(userProfileData); // Set user profile data
@@ -142,7 +143,7 @@ export default function Dashboard({ auth, posts, spotify }) {
 
     return (
         <AuthenticatedLayout user={auth.user}>
-            <Head title="Dashboard" />
+            <Head title="Dashboard"/>
             <div className="md:ml-20 mx-auto px-8 py-8 ">
                 <div className="relative">
                     <input
@@ -238,7 +239,7 @@ export default function Dashboard({ auth, posts, spotify }) {
                                             description: event.target.value,
                                         })
                                     }
-                                    style={{ resize: "none", height: "80px" }}
+                                    style={{resize: "none", height: "80px"}}
                                 />
                                 <button
                                     type="submit"
@@ -258,7 +259,7 @@ export default function Dashboard({ auth, posts, spotify }) {
                     </div>
                 </div>
             )}
-            <PostList posts={posts} user={auth.user} spotifyUserProfile={spotifyUserProfile} />
+            <PostList posts={posts} user={auth.user} spotifyUserProfile={spotifyUserProfile}/>
         </AuthenticatedLayout>
     );
 }
