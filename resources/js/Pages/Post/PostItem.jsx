@@ -13,21 +13,6 @@ const PostItem = ({post, user, spotifyUserProfile, volume, onLikeCountChange, li
     const [liked, setLiked] = useState(false);
 
 
-    // const [likeCounts, setLikeCounts] = useState({});
-    //
-    // useEffect(() => {
-    //     // Fetch like counts
-    //     axios.post("/posts/likes").then((response) => {
-    //         // Transform the response to a map/object for easier access
-    //         const countsMap = {};
-    //         response.data.likeCounts.forEach(item => {
-    //             countsMap[item.post_id] = item.total_likes;
-    //         });
-    //         setLikeCounts(countsMap);
-    //     });
-    // }, []);
-
-
     // on click of the like button, toggle the liked state and send a request to the server to update the liked status
     const handleLike = () => {
 
@@ -112,8 +97,8 @@ const PostItem = ({post, user, spotifyUserProfile, volume, onLikeCountChange, li
                     <button onClick={handlePlayPause} className="inline-flex items-center">
                         <FontAwesomeIcon icon={isPlaying ? faPause : faPlay} size="lg" className="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300" />
                     </button>
-                    <button>
-                        <FontAwesomeIcon onClick={handleLike} icon={ liked ?  faHeartSolid : faHeart } size="lg"/>
+                    <button onClick={handleLike} >
+                        <FontAwesomeIcon icon={ liked ?  faHeartSolid : faHeart } size="lg"/>
                         <span>&nbsp; {likeCount}</span>
                     </button>
                     <button>

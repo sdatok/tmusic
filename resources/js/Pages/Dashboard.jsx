@@ -14,18 +14,6 @@ export default function Dashboard({ auth, posts, spotify }) {
     const [selectedPost, setSelectedPost] = useState(null);
     const [spotifyUserProfile, setSpotifyUserProfile] = useState(null); // Add this line
 
-    // useEffect(() => {
-    //     const accessToken = localStorage.getItem('spotifyAccessToken');
-    //     const tokenExpiry = localStorage.getItem('spotifyTokenExpiry');
-    //     const now = new Date();
-    //
-    //     if (!accessToken || now > parseInt(tokenExpiry, 10)) {
-    //         // Redirect to Spotify authorization if no valid token is found
-    //         window.location.href = "/authorize-spotify";
-    //     }else{
-    //         fetchSpotifyUserProfile(accessToken);
-    //     }
-    // }, [accessToken]);
     useEffect(() => {
         // Fetch the Spotify session data from the backend
         fetch('/api/spotify-session')
@@ -220,10 +208,6 @@ export default function Dashboard({ auth, posts, spotify }) {
                 </div>
             )}
             <PostList posts={posts} user={auth.user} spotifyUserProfile={spotifyUserProfile} />
-            {/* Conditionally render the SpotifyAuthPopup */}
-            {/*{showSpotifyPopup && (*/}
-            {/*    <SpotifyAuthPopup onClose={() => setShowSpotifyPopup(false)} />*/}
-            {/*)}*/}
         </AuthenticatedLayout>
     );
 }
