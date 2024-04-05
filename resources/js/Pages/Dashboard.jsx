@@ -1,10 +1,10 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head } from "@inertiajs/react";
-import { useEffect, useState } from "react";
-import SpotifyAuthPopup from "@/Pages/SpotifyAuthPopup.jsx";
+import {useCallback, useEffect, useState} from "react";
 import { Inertia } from "@inertiajs/inertia";
 import { router } from "@inertiajs/react";
 import PostList from "@/Pages/Post/PostList.jsx";
+import { WebPlaybackSDK, usePlaybackState } from "react-spotify-web-playback-sdk";
 
 
 export default function Dashboard({ auth, posts, spotify }) {
@@ -15,19 +15,42 @@ export default function Dashboard({ auth, posts, spotify }) {
     const [spotifyUserProfile, setSpotifyUserProfile] = useState(null); // Add this line
 
     useEffect(() => {
-        // Fetch the Spotify session data from the backend
-        fetch('/api/spotify-session')
-            .then(response => response.json())
-            .then(data => {
-                const now = new Date().getTime() / 1000; // Convert current time to seconds
-                if (!data.spotify_access_token || now > data.spotify_token_expires) {
-                    window.location.href = "/authorize-spotify"; // Redirect to authorization if needed
-                } else {
-                    setAccessToken(data.spotify_access_token);
-                    fetchSpotifyUserProfile(data.spotify_access_token);
-                }
-            });
+         if(auth.user.spotify_token_expires_at < new Date().getTime() / 1000) {
+             window.location.href = "/authorize-spotify";
+         } else if (!auth.user.spotify_token || !auth.user.spotify_refresh_token) {
+            window.location.href = "/authorize-spotify";
+        }
     }, []);
+
+    const SongTitle = () => {
+        const playbackState = usePlaybackState();
+
+        console.log('plays', playbackState);
+
+        if (playbackState === null) return null;
+
+        return <p>Current song: {playbackState.track_window.current_track.name}</p>;
+    };
+
+
+    const MySpotifyPlayer = () => {
+
+        const AUTH_TOKEN = accessToken;
+
+        const getOAuthToken = useCallback(callback => callback(AUTH_TOKEN), []);
+
+        return (
+            <WebPlaybackSDK
+                deviceName="My awesome Spotify app"
+                getOAuthToken={getOAuthToken}
+                volume={0.3} initialDeviceName={"MyBroskiFromMother"}>
+
+                <SongTitle/>
+                <p>Wow</p>
+
+            </WebPlaybackSDK>
+        );
+    };
 
     const fetchSpotifyUserProfile = async (token) => {
         try {
@@ -143,6 +166,15 @@ export default function Dashboard({ auth, posts, spotify }) {
                     </button>
                 </div>
             </div>
+
+
+            {/*<div style={{ background: "white", justifyContent: "center" }}>*/}
+            {/*    <MySpotifyPlayer/>*/}
+
+            {/*    <div>*/}
+            {/*        LMFAO*/}
+            {/*    </div>*/}
+            {/*</div>*/}
 
             {/* Only render this section if there are tracks to display */}
             {tracks.length > 0 && (

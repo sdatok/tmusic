@@ -78,14 +78,6 @@ Route::get('/spotify-callback', [\App\Http\Controllers\SpotifyAuthorizeControlle
 //    return view('spotify-auth-success');
 //});
 
-// New route to fetch Spotify session data
-Route::middleware('auth')->get('/api/spotify-session', function (Request $request) {
-    return response()->json([
-        'spotify_access_token' => $request->session()->get('spotify_access_token', null),
-        'spotify_token_expires' => $request->session()->get('spotify_token_expires', null),
-    ]);
-});
-
 Route::middleware('auth')->group(function () {
     Route::post('/posts', [PostController::class, 'store'])->name('posts.store');
     Route::post('/posts/like', [PostController::class, 'like'])->name('posts.like');
