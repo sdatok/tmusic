@@ -5,6 +5,8 @@ import {faHeart, faComment} from "@fortawesome/free-regular-svg-icons";
 import {faHeart as faHeartSolid} from "@fortawesome/free-solid-svg-icons";
 import {  faPlay as faPlay } from "@fortawesome/free-solid-svg-icons";
 import {Inertia} from "@inertiajs/inertia"; // solid icons for filled versions
+import defaultUserImage from '@/assets/user.svg';
+
 
 const PostItem = ({post, user, spotifyUserProfile, volume, onLikeCountChange, likeCount, userLikes, onVolumeChange}) => {
     const [isPlaying, setIsPlaying] = useState(false);
@@ -82,7 +84,7 @@ const PostItem = ({post, user, spotifyUserProfile, volume, onLikeCountChange, li
             <div className="col-span-2 md:col-span-2 lg:col-span-2 p-4 flex flex-col justify-between">
                 {spotifyUserProfile && (
                     <div className="flex items-center space-x-2 mb-2">
-                        <img src={post.user.profile_url ? post.user.profile_url : '/images/default.png'} alt="User Profile"
+                        <img src={post.user.profile_url ? post.user.profile_url : defaultUserImage} alt="User Profile"
                              className="rounded-full w-8 h-8"/>
                         <span>{post.user.name}</span>
                     </div>
