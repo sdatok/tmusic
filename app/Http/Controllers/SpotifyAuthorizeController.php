@@ -35,15 +35,14 @@ class SpotifyAuthorizeController extends Controller
 
         $data = $response->json();
 
-
-        $user = auth()->user();
-        $user->spotify_token = $data['access_token'];
-        $user->spotify_refresh_token = $data['refresh_token'];
-        $user->spotify_token_expires_at = time() + $data['expires_in'];
-        $user->save();
-
-
         if (isset($data['access_token'])) {
+
+            $user = auth()->user();
+            $user->spotify_token = $data['access_token'];
+            $user->spotify_refresh_token = $data['refresh_token'];
+            $user->spotify_token_expires_at = time() + $data['expires_in'];
+            $user->save();
+
             return redirect()->route('dashboard'); // Adjusted redirect
         } else {
             return Redirect::route('dashboard')->with('error', 'Spotify authorization failed. Please try again.');
