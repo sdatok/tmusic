@@ -89,6 +89,7 @@ export default function Dashboard({ auth, posts, spotify }) {
     const handleSongClick = (track) => {
         // console.log(track);
         setSelectedPost({
+            song_id: track.id,
             title: track.name,
             album: track.album.name,
             artist: track.artists.map((artist) => artist.name).join(", "),
@@ -218,7 +219,7 @@ export default function Dashboard({ auth, posts, spotify }) {
                     </div>
                 </div>
             )}
-            <PostList posts={posts} spotifyUserProfile={spotifyUserProfile} />
+            <PostList posts={posts} user={auth.user} spotifyUserProfile={spotifyUserProfile} />
             {/* Conditionally render the SpotifyAuthPopup */}
             {/*{showSpotifyPopup && (*/}
             {/*    <SpotifyAuthPopup onClose={() => setShowSpotifyPopup(false)} />*/}

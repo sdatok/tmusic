@@ -1,21 +1,77 @@
 import React, {useState, useRef, useEffect} from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faVolumeUp, faVolumeMute, faPause} from "@fortawesome/free-solid-svg-icons";
-import {faHeart as farHeart, faComment as farComment, faHeart, faComment} from "@fortawesome/free-regular-svg-icons";
-import {faHeart as fasHeart, faComment as fasComment} from "@fortawesome/free-solid-svg-icons";
-import {  faPlay as faPlay } from "@fortawesome/free-solid-svg-icons"; // solid icons for filled versions
+import {faHeart, faComment} from "@fortawesome/free-regular-svg-icons";
+import {faHeart as faHeartSolid} from "@fortawesome/free-solid-svg-icons";
+import {  faPlay as faPlay } from "@fortawesome/free-solid-svg-icons";
+import {Inertia} from "@inertiajs/inertia"; // solid icons for filled versions
 
-
-const PostItem = ({post, spotifyUserProfile, volume, onVolumeChange}) => {
+const PostItem = ({post, user, spotifyUserProfile, volume, onLikeCountChange, likeCount, userLikes, onVolumeChange}) => {
     const [isPlaying, setIsPlaying] = useState(false);
     const audioRef = useRef(null);
     const [showVolumeSlider, setShowVolumeSlider] = useState(false);
+    const [liked, setLiked] = useState(false);
+
+
+    // const [likeCounts, setLikeCounts] = useState({});
+    //
+    // useEffect(() => {
+    //     // Fetch like counts
+    //     axios.post("/posts/likes").then((response) => {
+    //         // Transform the response to a map/object for easier access
+    //         const countsMap = {};
+    //         response.data.likeCounts.forEach(item => {
+    //             countsMap[item.post_id] = item.total_likes;
+    //         });
+    //         setLikeCounts(countsMap);
+    //     });
+    // }, []);
+
+
+    // on click of the like button, toggle the liked state and send a request to the server to update the liked status
+    const handleLike = () => {
+
+        setLiked(!liked);
+        const updatedLikeCount = liked ? likeCount - 1 : likeCount + 1;
+        onLikeCountChange(post.id, updatedLikeCount); // Call the function passed from the parent
+
+
+        // axios post request to update the liked status
+        axios.post(`/posts/like`, {
+            postId: post.id,
+            liked: !liked
+        }).then((response) => {
+            console.log(response.data);
+            // setLiked(response.data);
+        });
+
+    }
+
 
     useEffect(() => {
+
         if (audioRef.current) {
             audioRef.current.volume = volume;
         }
+
+
     }, [volume]);
+
+    useEffect(() => {
+        // Check if the userLikes object has a 'likes' property and that property is an array with length greater than 0
+        if (userLikes.likes && Array.isArray(userLikes.likes) && userLikes.likes.length > 0) {
+            // Check if the current post's ID is included in the likes array
+            const isPostLiked = userLikes.likes.includes(post.id);
+            setLiked(isPostLiked); // Update the 'liked' state based on whether the post is liked
+        } else {
+            // Optionally, set 'liked' to false if the likes array is empty or not present,
+            // assuming that means the user hasn't liked any posts
+            setLiked(false);
+        }
+    }, [userLikes, post.id]);
+
+
+
     // Toggles play/pause for the audio
     const handlePlayPause = () => {
         console.log("Current isPlaying state before toggle:", isPlaying);
@@ -35,7 +91,6 @@ const PostItem = ({post, spotifyUserProfile, volume, onVolumeChange}) => {
     };
 
     // Assuming you have a state or a way to determine if the post is liked or commented on
-    const isLiked = false; // This should be dynamic based on your app's logic
     const isCommented = false; // This should be dynamic based on your app's logic
 
     return (
@@ -58,7 +113,8 @@ const PostItem = ({post, spotifyUserProfile, volume, onVolumeChange}) => {
                         <FontAwesomeIcon icon={isPlaying ? faPause : faPlay} size="lg" className="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300" />
                     </button>
                     <button>
-                        <FontAwesomeIcon icon={faHeart} size="lg"/>
+                        <FontAwesomeIcon onClick={handleLike} icon={ liked ?  faHeartSolid : faHeart } size="lg"/>
+                        <span>&nbsp; {likeCount}</span>
                     </button>
                     <button>
                         <FontAwesomeIcon icon={faComment} size="lg"/>

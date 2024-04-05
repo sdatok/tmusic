@@ -88,6 +88,9 @@ Route::middleware('auth')->get('/api/spotify-session', function (Request $reques
 
 Route::middleware('auth')->group(function () {
     Route::post('/posts', [PostController::class, 'store'])->name('posts.store');
+    Route::post('/posts/like', [PostController::class, 'like'])->name('posts.like');
+    Route::post('/posts/likes', [PostController::class, 'getLikesByUser'])->name('posts.likes');
+    Route::post('/posts/totalLikes', [PostController::class, 'getPostsLikes'])->name('posts.totalLikes');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');

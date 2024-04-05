@@ -48,18 +48,32 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
+    protected $with = [
+        'posts'
+    ];
+
     public function posts()
     {
         return $this->hasMany(Post::class);
     }
 
+    public function likes()
+    {
+        return $this->hasMany(UserSongLike::class);
+    }
+
+    public function getLikes()
+    {
+        return $this->likes()->pluck('post_id');
+    }
+
     public static function generateUserName($username)
     {
-        if($username === null){
+        if ($username === null) {
             $username = Str::lower(Str::random(8));
         }
-        if(User::where('username', $username)->exists()){
-            $newUsername = $username.Str::lower(Str::random(3));
+        if (User::where('username', $username)->exists()) {
+            $newUsername = $username . Str::lower(Str::random(3));
             $username = self::generateUserName($newUsername);
         }
         return $username;
