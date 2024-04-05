@@ -20,7 +20,7 @@ export default function Welcome({ auth }) {
                     {auth.user ? (
                         <Link
                             href={route('dashboard')}
-                            className="block w-full px-12 py-2 text-center text-white bg-blue-600 rounded-md shadow hover:bg-blue-700"
+                            className="w-full block px-12 py-2 text-center text-white bg-blue-600 rounded-md shadow hover:bg-blue-700"
                         >
                             Go to Dashboard
                         </Link>

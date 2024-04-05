@@ -1,40 +1,40 @@
 {
-  "_AuthenticatedLayout-8306e4d4.js": {
-    "file": "assets/AuthenticatedLayout-8306e4d4.js",
+  "_AuthenticatedLayout-2f5acf6e.js": {
+    "file": "assets/AuthenticatedLayout-2f5acf6e.js",
     "imports": [
       "resources/js/app.jsx",
-      "_transition-b36d5a33.js",
+      "_transition-acc08042.js",
       "_tmusiclogo-591b3884.js"
     ]
   },
-  "_GuestLayout-7f43ed3c.js": {
-    "file": "assets/GuestLayout-7f43ed3c.js",
+  "_GuestLayout-9a6c93b7.js": {
+    "file": "assets/GuestLayout-9a6c93b7.js",
     "imports": [
       "resources/js/app.jsx",
       "_tmusiclogo-591b3884.js"
     ]
   },
-  "_InputLabel-d196372b.js": {
-    "file": "assets/InputLabel-d196372b.js",
+  "_InputLabel-57a63749.js": {
+    "file": "assets/InputLabel-57a63749.js",
     "imports": [
       "resources/js/app.jsx"
     ]
   },
-  "_PostItem-2261fb4e.js": {
-    "file": "assets/PostItem-2261fb4e.js",
+  "_PostItem-2d62b78c.js": {
+    "file": "assets/PostItem-2d62b78c.js",
     "imports": [
       "resources/js/app.jsx"
     ],
     "isDynamicEntry": true
   },
-  "_PrimaryButton-25efa5e2.js": {
-    "file": "assets/PrimaryButton-25efa5e2.js",
+  "_PrimaryButton-5a548fe3.js": {
+    "file": "assets/PrimaryButton-5a548fe3.js",
     "imports": [
       "resources/js/app.jsx"
     ]
   },
-  "_TextInput-7d5c6b9e.js": {
-    "file": "assets/TextInput-7d5c6b9e.js",
+  "_TextInput-f6c851cd.js": {
+    "file": "assets/TextInput-f6c851cd.js",
     "imports": [
       "resources/js/app.jsx"
     ]
@@ -45,154 +45,154 @@
     ],
     "file": "assets/tmusiclogo-591b3884.js"
   },
-  "_transition-b36d5a33.js": {
-    "file": "assets/transition-b36d5a33.js",
+  "_transition-acc08042.js": {
+    "file": "assets/transition-acc08042.js",
     "imports": [
       "resources/js/app.jsx"
     ]
   },
   "resources/js/Pages/AdminDashboard.jsx": {
-    "file": "assets/AdminDashboard-96714e4e.js",
+    "file": "assets/AdminDashboard-8c42a688.js",
     "imports": [
       "resources/js/app.jsx",
-      "_AuthenticatedLayout-8306e4d4.js",
+      "_AuthenticatedLayout-2f5acf6e.js",
       "resources/js/Pages/SpotifyAuthPopup.jsx",
-      "_PostItem-2261fb4e.js",
+      "_PostItem-2d62b78c.js",
       "resources/js/Pages/Post/PostList.jsx",
-      "_transition-b36d5a33.js",
+      "_transition-acc08042.js",
       "_tmusiclogo-591b3884.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/AdminDashboard.jsx"
   },
   "resources/js/Pages/Auth/ConfirmPassword.jsx": {
-    "file": "assets/ConfirmPassword-28244361.js",
+    "file": "assets/ConfirmPassword-9cb2e71e.js",
     "imports": [
       "resources/js/app.jsx",
-      "_GuestLayout-7f43ed3c.js",
-      "_TextInput-7d5c6b9e.js",
-      "_InputLabel-d196372b.js",
-      "_PrimaryButton-25efa5e2.js",
+      "_GuestLayout-9a6c93b7.js",
+      "_TextInput-f6c851cd.js",
+      "_InputLabel-57a63749.js",
+      "_PrimaryButton-5a548fe3.js",
       "_tmusiclogo-591b3884.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Auth/ConfirmPassword.jsx"
   },
   "resources/js/Pages/Auth/ForgotPassword.jsx": {
-    "file": "assets/ForgotPassword-e4434398.js",
+    "file": "assets/ForgotPassword-bdb2d24e.js",
     "imports": [
       "resources/js/app.jsx",
-      "_GuestLayout-7f43ed3c.js",
-      "_TextInput-7d5c6b9e.js",
-      "_PrimaryButton-25efa5e2.js",
+      "_GuestLayout-9a6c93b7.js",
+      "_TextInput-f6c851cd.js",
+      "_PrimaryButton-5a548fe3.js",
       "_tmusiclogo-591b3884.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Auth/ForgotPassword.jsx"
   },
   "resources/js/Pages/Auth/Login.jsx": {
-    "file": "assets/Login-4b105b84.js",
+    "file": "assets/Login-7c0b4151.js",
     "imports": [
       "resources/js/app.jsx",
-      "_GuestLayout-7f43ed3c.js",
-      "_TextInput-7d5c6b9e.js",
-      "_InputLabel-d196372b.js",
-      "_PrimaryButton-25efa5e2.js",
+      "_GuestLayout-9a6c93b7.js",
+      "_TextInput-f6c851cd.js",
+      "_InputLabel-57a63749.js",
+      "_PrimaryButton-5a548fe3.js",
       "_tmusiclogo-591b3884.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Auth/Login.jsx"
   },
   "resources/js/Pages/Auth/Register.jsx": {
-    "file": "assets/Register-0db6fdf4.js",
+    "file": "assets/Register-3235aa71.js",
     "imports": [
       "resources/js/app.jsx",
-      "_GuestLayout-7f43ed3c.js",
-      "_TextInput-7d5c6b9e.js",
-      "_InputLabel-d196372b.js",
-      "_PrimaryButton-25efa5e2.js",
+      "_GuestLayout-9a6c93b7.js",
+      "_TextInput-f6c851cd.js",
+      "_InputLabel-57a63749.js",
+      "_PrimaryButton-5a548fe3.js",
       "_tmusiclogo-591b3884.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Auth/Register.jsx"
   },
   "resources/js/Pages/Auth/ResetPassword.jsx": {
-    "file": "assets/ResetPassword-1046026c.js",
+    "file": "assets/ResetPassword-3cf05416.js",
     "imports": [
       "resources/js/app.jsx",
-      "_GuestLayout-7f43ed3c.js",
-      "_TextInput-7d5c6b9e.js",
-      "_InputLabel-d196372b.js",
-      "_PrimaryButton-25efa5e2.js",
+      "_GuestLayout-9a6c93b7.js",
+      "_TextInput-f6c851cd.js",
+      "_InputLabel-57a63749.js",
+      "_PrimaryButton-5a548fe3.js",
       "_tmusiclogo-591b3884.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Auth/ResetPassword.jsx"
   },
   "resources/js/Pages/Auth/VerifyEmail.jsx": {
-    "file": "assets/VerifyEmail-9fbcfee4.js",
+    "file": "assets/VerifyEmail-700d0117.js",
     "imports": [
       "resources/js/app.jsx",
-      "_GuestLayout-7f43ed3c.js",
-      "_PrimaryButton-25efa5e2.js",
+      "_GuestLayout-9a6c93b7.js",
+      "_PrimaryButton-5a548fe3.js",
       "_tmusiclogo-591b3884.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Auth/VerifyEmail.jsx"
   },
   "resources/js/Pages/Dashboard.jsx": {
-    "file": "assets/Dashboard-00ffec44.js",
+    "file": "assets/Dashboard-41636041.js",
     "imports": [
       "resources/js/app.jsx",
-      "_AuthenticatedLayout-8306e4d4.js",
-      "_PostItem-2261fb4e.js",
+      "_AuthenticatedLayout-2f5acf6e.js",
+      "_PostItem-2d62b78c.js",
       "resources/js/Pages/Post/PostList.jsx",
-      "_transition-b36d5a33.js",
+      "_transition-acc08042.js",
       "_tmusiclogo-591b3884.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Dashboard.jsx"
   },
   "resources/js/Pages/Post/PostList.jsx": {
-    "file": "assets/PostList-c62a4b5f.js",
+    "file": "assets/PostList-8ae32206.js",
     "imports": [
       "resources/js/app.jsx",
-      "_PostItem-2261fb4e.js"
+      "_PostItem-2d62b78c.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Post/PostList.jsx"
   },
   "resources/js/Pages/Profile/Edit.jsx": {
-    "file": "assets/Edit-2e2aa34d.js",
+    "file": "assets/Edit-efa6ac90.js",
     "imports": [
       "resources/js/app.jsx",
-      "_AuthenticatedLayout-8306e4d4.js",
+      "_AuthenticatedLayout-2f5acf6e.js",
       "resources/js/Pages/Profile/Partials/DeleteUserForm.jsx",
       "resources/js/Pages/Profile/Partials/UpdatePasswordForm.jsx",
       "resources/js/Pages/Profile/Partials/UpdateProfileInformationForm.jsx",
       "resources/js/Pages/Profile/Partials/SpotifyProfile.jsx",
-      "_transition-b36d5a33.js",
+      "_transition-acc08042.js",
       "_tmusiclogo-591b3884.js",
-      "_TextInput-7d5c6b9e.js",
-      "_InputLabel-d196372b.js",
-      "_PrimaryButton-25efa5e2.js"
+      "_TextInput-f6c851cd.js",
+      "_InputLabel-57a63749.js",
+      "_PrimaryButton-5a548fe3.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Profile/Edit.jsx"
   },
   "resources/js/Pages/Profile/Partials/DeleteUserForm.jsx": {
-    "file": "assets/DeleteUserForm-9613a243.js",
+    "file": "assets/DeleteUserForm-a02cfc6d.js",
     "imports": [
       "resources/js/app.jsx",
-      "_TextInput-7d5c6b9e.js",
-      "_InputLabel-d196372b.js",
-      "_transition-b36d5a33.js"
+      "_TextInput-f6c851cd.js",
+      "_InputLabel-57a63749.js",
+      "_transition-acc08042.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Profile/Partials/DeleteUserForm.jsx"
   },
   "resources/js/Pages/Profile/Partials/SpotifyProfile.jsx": {
-    "file": "assets/SpotifyProfile-4e0012c3.js",
+    "file": "assets/SpotifyProfile-84f8b046.js",
     "imports": [
       "resources/js/app.jsx"
     ],
@@ -200,31 +200,31 @@
     "src": "resources/js/Pages/Profile/Partials/SpotifyProfile.jsx"
   },
   "resources/js/Pages/Profile/Partials/UpdatePasswordForm.jsx": {
-    "file": "assets/UpdatePasswordForm-2e7b1874.js",
+    "file": "assets/UpdatePasswordForm-a4fcd882.js",
     "imports": [
       "resources/js/app.jsx",
-      "_TextInput-7d5c6b9e.js",
-      "_InputLabel-d196372b.js",
-      "_PrimaryButton-25efa5e2.js",
-      "_transition-b36d5a33.js"
+      "_TextInput-f6c851cd.js",
+      "_InputLabel-57a63749.js",
+      "_PrimaryButton-5a548fe3.js",
+      "_transition-acc08042.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Profile/Partials/UpdatePasswordForm.jsx"
   },
   "resources/js/Pages/Profile/Partials/UpdateProfileInformationForm.jsx": {
-    "file": "assets/UpdateProfileInformationForm-473de85a.js",
+    "file": "assets/UpdateProfileInformationForm-2f580008.js",
     "imports": [
       "resources/js/app.jsx",
-      "_TextInput-7d5c6b9e.js",
-      "_InputLabel-d196372b.js",
-      "_PrimaryButton-25efa5e2.js",
-      "_transition-b36d5a33.js"
+      "_TextInput-f6c851cd.js",
+      "_InputLabel-57a63749.js",
+      "_PrimaryButton-5a548fe3.js",
+      "_transition-acc08042.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Profile/Partials/UpdateProfileInformationForm.jsx"
   },
   "resources/js/Pages/SpotifyAuthPopup.jsx": {
-    "file": "assets/SpotifyAuthPopup-5c255378.js",
+    "file": "assets/SpotifyAuthPopup-aa1d0abd.js",
     "imports": [
       "resources/js/app.jsx"
     ],
@@ -235,7 +235,7 @@
     "assets": [
       "assets/spotifylogo-72d3d6b0.svg"
     ],
-    "file": "assets/Welcome-00ae6d55.js",
+    "file": "assets/Welcome-4444e4fd.js",
     "imports": [
       "resources/js/app.jsx",
       "_tmusiclogo-591b3884.js"
@@ -260,7 +260,7 @@
       "resources/js/Pages/Auth/ResetPassword.jsx",
       "resources/js/Pages/Auth/VerifyEmail.jsx",
       "resources/js/Pages/Dashboard.jsx",
-      "_PostItem-2261fb4e.js",
+      "_PostItem-2d62b78c.js",
       "resources/js/Pages/Post/PostList.jsx",
       "resources/js/Pages/Profile/Edit.jsx",
       "resources/js/Pages/Profile/Partials/DeleteUserForm.jsx",
@@ -270,7 +270,7 @@
       "resources/js/Pages/SpotifyAuthPopup.jsx",
       "resources/js/Pages/Welcome.jsx"
     ],
-    "file": "assets/app-eb26a8d9.js",
+    "file": "assets/app-d412d7ed.js",
     "isEntry": true,
     "src": "resources/js/app.jsx"
   },
