@@ -32,6 +32,9 @@ export default function Authenticated({user, header, children}) {
                                 <NavLink href={route('chatify')} active={route().current('chatify')}>
                                     Chat
                                 </NavLink>
+                                <NavLink href={route('user.show', { username: user.username })}>
+                                    Profile
+                                </NavLink>
                             </div>
                         </div>
 

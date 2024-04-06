@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\UserController;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -70,7 +71,7 @@ Route::get('/auth/google/callback', function () {
 
 
 Route::get('/dashboard', [HomeController::class, 'index'])->name('dashboard');
-
+Route::get('/user/{username}', [UserController::class, 'show'])->name('user.show');
 
 Route::get('/authorize-spotify', [\App\Http\Controllers\SpotifyAuthorizeController::class, 'authorizeSpotify'])->name('spotify.authorize');
 Route::get('/spotify-callback', [\App\Http\Controllers\SpotifyAuthorizeController::class, 'callback'])->name('spotify.callback');
