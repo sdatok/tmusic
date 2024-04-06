@@ -28,8 +28,6 @@ export default function Dashboard({auth, posts, spotify}) {
     const SongTitle = () => {
         const playbackState = usePlaybackState();
 
-        console.log('plays', playbackState);
-
         if (playbackState === null) return null;
 
         return <p>Current song: {playbackState.track_window.current_track.name}</p>;
@@ -38,18 +36,22 @@ export default function Dashboard({auth, posts, spotify}) {
 
     const MySpotifyPlayer = () => {
 
+
+
         const AUTH_TOKEN = accessToken;
 
         const getOAuthToken = useCallback(callback => callback(AUTH_TOKEN), []);
+
+        console.log('called', AUTH_TOKEN);
 
         return (
             <WebPlaybackSDK
                 deviceName="My awesome Spotify app"
                 getOAuthToken={getOAuthToken}
-                volume={0.3} initialDeviceName={"MyBroskiFromMother"}>
+                volume={0.3} initialDeviceName={"MyBroskiFrsssomMother"}>
 
-                <SongTitle/>
-                <p>Wow</p>
+                {/*<SongTitle/>*/}
+                {/*<p>Wow</p>*/}
 
             </WebPlaybackSDK>
         );
@@ -169,13 +171,9 @@ export default function Dashboard({auth, posts, spotify}) {
             </div>
 
 
-            {/*<div style={{ background: "white", justifyContent: "center" }}>*/}
-            {/*    <MySpotifyPlayer/>*/}
-
-            {/*    <div>*/}
-            {/*        LMFAO*/}
-            {/*    </div>*/}
-            {/*</div>*/}
+            <div style={{ background: "white", justifyContent: "center" }}>
+                {accessToken && <MySpotifyPlayer />}
+            </div>
 
             {/* Only render this section if there are tracks to display */}
             {tracks.length > 0 && (
