@@ -6,7 +6,7 @@ export default function SpotifyProfile() {
     useEffect(() => {
         const accessToken = localStorage.getItem('spotify_token');
         if (!accessToken) {
-            console.log('Spotify access token is not available in local storage.');
+            // console.log('Spotify access token is not available in local storage.');
             // Handle the logic here if the token is not available
             // Maybe redirect to login or show an error message
             return;
