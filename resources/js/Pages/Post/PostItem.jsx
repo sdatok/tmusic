@@ -59,7 +59,7 @@ const PostItem = ({post, user, spotifyUserProfile, volume, onLikeCountChange, li
 
     // Toggles play/pause for the audio
     const handlePlayPause = () => {
-        console.log("Current isPlaying state before toggle:", isPlaying);
+        // console.log("Current isPlaying state before toggle:", isPlaying);
         if (audioRef.current) {
             if (isPlaying) {
                 audioRef.current.pause();
