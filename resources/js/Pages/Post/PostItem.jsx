@@ -75,8 +75,6 @@ const PostItem = ({post, user, spotifyUserProfile, volume, onLikeCountChange, li
     const localHandleVolumeChange = (event) => {
         onVolumeChange(parseFloat(event.target.value)); // Use the function passed from parent to change volume
     };
-
-    // Assuming you have a state or a way to determine if the post is liked or commented on
     const isCommented = false; // This should be dynamic based on your app's logic
 
     return (
