@@ -19,7 +19,8 @@ export default {
             },
             colors: {
                 'midnight': '#121212',
-                'spotifygray': '#373a3d'
+                'spotifygray': '#373a3d',
+                'tmu': '#1e1e1e',
             }
         },
 
