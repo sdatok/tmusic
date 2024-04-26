@@ -28,7 +28,6 @@ class PostController extends Controller
 
         $post = $request->user()->posts()->create($validatedData);
 
-        Log::alert('donezo ', $post->toArray());
 
 
         // If using Inertia, you can return a proper Inertia response.
