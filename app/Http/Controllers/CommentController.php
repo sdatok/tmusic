@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Comment;
+use App\Models\Post;
 use Illuminate\Http\Request;
 
 class CommentController extends Controller
@@ -14,7 +15,13 @@ class CommentController extends Controller
             'post_id' => 'required|exists:posts,id',
         ]);
 
-        $comment = $request->user()->create()->create($validatedData);
+        $comment = Comment::create([
+            'user_id' => $request->user()->id,
+            'post_id' => $validatedData['post_id'],
+            'comment' => $validatedData['comment'],
+        ]);
+
+        return redirect()->back()->with('success', 'Comment added successfully.');
 
     }
 
@@ -22,5 +29,10 @@ class CommentController extends Controller
     {
         $liked = $comment->like($request->user());
 
+    }
+
+    public function getComments(Post $post)
+    {
+        return $post->comments()->with('user')->get();
     }
 }

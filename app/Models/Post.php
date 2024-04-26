@@ -38,4 +38,9 @@ class Post extends Model
     {
         return $this->likes()->detach($user->id);
     }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
 }
